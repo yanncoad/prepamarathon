@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <title>Road to Rennes - Marathon Training</title>
+  
+  <!-- PWA Meta Tags -->
+  <meta name="description" content="Application d'entraînement marathon - Préparation Road to Rennes">
+  <meta name="theme-color" content="#ff6b35">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Road to Rennes">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <!-- Apple Touch Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiByeD0iMzAiIGZpbGw9InVybCgjZ3JhZGllbnQwX2xpbmVhcl8xXzEpIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MF9saW5lYXJfMV8xIiB4MT0iMCIgeTE9IjAiIHgyPSIxODAiIHkyPSIxODAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iI2ZmNmIzNSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNlODVhMmIiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8dGV4dCB4PSI5MCIgeT0iMTEwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iODAiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIj7wn4+DIjwvdGV4dD4KPC9zdmc+">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iMTYiIGZpbGw9InVybCgjZ3JhZGllbnQwX2xpbmVhcl8xXzEpIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MF9saW5lYXJfMV8xIiB4MT0iMCIgeTE9IjAiIHgyPSIzMiIgeTI9IjMyIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiNmZjZiMzUiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjZTg1YTJiIi8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHRleHQgeD0iMTYiIHk9IjIyIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSI3MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIj7wn4+DIjwvdGV4dD4KPC9zdmc+">
+  
+  <!-- Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <script src="sessions-data.js"></script>
+  <style>
+    /* Design système moderne - Mobile First */
+    :root {
+      /* Couleurs principales */
+      --primary: #ff6b35;
+      --primary-dark: #e85a2b;
+      --primary-light: #ff7d4d;
+      --secondary: #6366f1;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      
+      /* Surfaces */
+      --surface: #ffffff;
+      --surface-variant: #f8fafc;
+      --surface-elevated: #ffffff;
+      --background: #f1f5f9;
+      --background-gradient: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      
+      /* Texte */
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --text-tertiary: #94a3b8;
+      
+      /* Bordures */
+      --border: #e2e8f0;
+      --border-variant: #cbd5e1;
+      
+      /* Ombres */
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      
+      /* Rayons */
+      --radius-sm: 6px;
+      --radius: 12px;
+      --radius-md: 16px;
+      --radius-lg: 20px;
+      --radius-xl: 24px;
+      
+      /* Espacements */
+      --spacing-xs: 4px;
+      --spacing-sm: 8px;
+      --spacing-md: 16px;
+      --spacing-lg: 24px;
+      --spacing-xl: 32px;
+      --spacing-2xl: 48px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--background-gradient);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text-primary);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Container principal */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-md);
+    }
+
+    /* Header moderne */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(20px);
+      background-color: rgba(255, 255, 255, 0.95);
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-md) 0;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .stats-header {
+      display: flex;
+      gap: var(--spacing-lg);
+      font-size: 0.875rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 2px;
+    }
+
+    /* Navigation */
+    .nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: var(--spacing-md) 0;
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-filters {
+      display: flex;
+      gap: var(--spacing-sm);
+    }
+
+    .filter-btn {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Cards principales */
+    .session-card {
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      padding: var(--spacing-lg);
+      margin-bottom: var(--spacing-md);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .session-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .session-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .card-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .card-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    .card-progress {
+      text-align: right;
+    }
+
+    .progress-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .progress-status {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .progress-status.completed {
+      color: var(--success);
+    }
+
+    .progress-status.today {
+      color: var(--warning);
+    }
+
+    /* Barre de progression */
+    .progress-bar {
+      height: 8px;
+      background: var(--surface-variant);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      transition: width 0.3s ease;
+    }
+
+    /* Checkboxes personnalisées */
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      padding: var(--spacing-sm);
+      border-radius: var(--radius-sm);
+      transition: background-color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .checkbox-container:hover {
+      background: var(--surface-variant);
+    }
+
+    .custom-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      position: relative;
+      background: var(--surface);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .custom-checkbox.checked {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .custom-checkbox.checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .checkbox-label {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .checkbox-label.checked {
+      color: var(--text-secondary);
+      text-decoration: line-through;
+    }
+
+    /* Boutons */
+    .btn {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid transparent;
+    }
+
+    .btn-ghost:hover {
+      background: var(--surface-variant);
+      color: var(--text-primary);
+    }
+
+    /* Input de poids */
+    .weight-input {
+      width: 80px;
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      text-align: center;
+    }
+
+    .weight-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-content {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-xl);
+      position: relative;
+    }
+
+    .modal-header {
+      padding: var(--spacing-lg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: var(--spacing-xs);
+      border-radius: var(--radius-sm);
+    }
+
+    .modal-close:hover {
+      background: var(--surface-variant);
+    }
+
+    .modal-body {
+      padding: var(--spacing-lg);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .stats-header {
+        display: none;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: var(--spacing-md);
+      }
+
+      .nav-content {
+        flex-direction: column;
+        gap: var(--spacing-md);
+      }
+
+      .nav-filters {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .session-card {
+        padding: var(--spacing-md);
+      }
+
+      .card-header {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+      }
+
+      .card-progress {
+        text-align: left;
+      }
+    }
+
+    /* Stats mobile */
+    .stats-mobile {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: var(--spacing-md) 0;
+    }
+
+    .stats-mobile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-md);
+      text-align: center;
+    }
+
+    /* Utilitaires */
+    .hidden {
+      display: none;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .text-success {
+      color: var(--success);
+    }
+
+    .text-warning {
+      color: var(--warning);
+    }
+
+    .text-error {
+      color: var(--error);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* Types de séances */
+    .session-card.endurance::before {
+      background: linear-gradient(90deg, #ff6b35, #ff8a65);
+    }
+
+    .session-card.recovery::before {
+      background: linear-gradient(90deg, #6366f1, #818cf8);
+    }
+
+    .session-card.vma::before {
+      background: linear-gradient(90deg, #ef4444, #f87171);
+    }
+
+    .session-card.rest::before {
+      background: linear-gradient(90deg, #10b981, #34d399);
+    }
+
+    .session-card.tempo::before {
+      background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+    }
+
+    .session-card.festival::before {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+
+    /* Icônes de type */
+    .type-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      margin-right: var(--spacing-md);
+    }
+
+    .type-icon.endurance {
+      background: linear-gradient(135deg, #ff6b35, #ff8a65);
+    }
+
+    .type-icon.recovery {
+      background: linear-gradient(135deg, #6366f1, #818cf8);
+    }
+
+    .type-icon.vma {
+      background: linear-gradient(135deg, #ef4444, #f87171);
+    }
+
+    .type-icon.rest {
+      background: linear-gradient(135deg, #10b981, #34d399);
+    }
+
+    .type-icon.tempo {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+    }
+
+    .type-icon.festival {
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    }
+
+    /* Détails de séance */
+    .session-details {
+      background: var(--surface-variant);
+      border-radius: var(--radius-sm);
+      padding: var(--spacing-md);
+      margin-top: var(--spacing-md);
+    }
+
+    .detail-section {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .detail-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .detail-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .detail-content {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    /* Bottom actions */
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: var(--spacing-md);
+      border-top: 1px solid var(--border);
+      margin-top: var(--spacing-md);
+    }
+
+    .weight-section {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .weight-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: var(--spacing-sm);
+    }
+
+
+    /* Différences de poids */
+    .weight-differences {
+      margin-top: var(--spacing-xs);
+      font-size: 0.75rem;
+    }
+
+    .weight-diff {
+      margin-bottom: 2px;
+    }
+
+    .weight-diff.positive {
+      color: var(--error);
+    }
+
+    .weight-diff.negative {
+      color: var(--success);
+    }
+
+    /* Toggle pour détails */
+    .toggle-details {
+      background: var(--surface-variant);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: var(--spacing-md);
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .toggle-details:hover {
+      background: var(--surface);
+    }
+
+    .toggle-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .toggle-title {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .toggle-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-top: 2px;
+    }
+
+    .toggle-arrow {
+      color: var(--text-secondary);
+      transition: transform 0.2s ease;
+    }
+
+    .toggle-arrow.open {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-icon">🏃</div>
+          <div>
+            <div>Road to Rennes</div>
+            <div style="font-size: 0.875rem; font-weight: 400; color: var(--text-secondary);">
+              Marathon Training
+            </div>
+          </div>
+        </div>
+        
+        <div class="stats-header">
+          <div class="stat-item">
+            <div class="stat-number" id="daysRemaining">---</div>
+            <div class="stat-label">Jours restants</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number text-success" id="completedSessions">0</div>
+            <div class="stat-label">Terminées</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" id="progressPercentage">0%</div>
+            <div class="stat-label">Progression</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Stats mobile -->
+  <div class="stats-mobile" style="display: none;">
+    <div class="container">
+      <div class="stats-mobile-grid">
+        <div class="stat-item">
+          <div class="stat-number" id="daysRemainingMobile">---</div>
+          <div class="stat-label">Jours restants</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number text-success" id="completedSessionsMobile">0</div>
+          <div class="stat-label">Terminées</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="progressPercentageMobile">0%</div>
+          <div class="stat-label">Progression</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="container">
+      <div class="nav-content">
+        <div style="font-size: 0.875rem; color: var(--text-secondary);">
+          22 juillet - 26 octobre 2025
+        </div>
+        
+        <div class="nav-filters">
+          <button class="filter-btn active" data-filter="all">Toutes</button>
+          <button class="filter-btn" data-filter="completed">Terminées</button>
+          <button class="filter-btn" data-filter="pending">En cours</button>
+          <button class="filter-btn" data-filter="today">Aujourd'hui</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Contenu principal -->
+  <main class="container">
+    <div id="grid"></div>
+  </main>
+
+  <!-- Modal Nutrition -->
+  <div id="nutritionModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Guide Nutrition</h2>
+        <button class="modal-close" id="closeModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg);">
+          <!-- Principe général -->
+          <div class="session-card">
+            <h3 style="color: var(--text-primary); margin-bottom: var(--spacing-md);">🎯 Principe Général</h3>
+            <div style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5;">
+              <div><strong>Matin :</strong> Protéine + Glucide (+ fruits)</div>
+              <div><strong>Midi :</strong> Protéine + Glucide + Légumes + Lipide</div>
+              <div><strong>Soir :</strong> Protéine + Légumes + Lipide + Petit Glucide</div>
+            </div>
+          </div>
+
+          <!-- Options matin -->
+          <div class="session-card">
+            <h3 style="color: var(--text-primary); margin-bottom: var(--spacing-md);">🌅 Options Matin</h3>
+            <div style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5;">
+              <div>• Œufs brouillés (2-3 œufs)</div>
+              <div>• Skyr (150g) + stevia + fruits + avoine (60g)</div>
+              <div>• Porridge avoine (60g) + lait d'amande + fruits</div>
+            </div>
+          </div>
+
+          <!-- Glucides -->
+          <div class="session-card">
+            <h3 style="color: var(--text-primary); margin-bottom: var(--spacing-md);">🌾 Glucides</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5;">
+              <div>
+                <div><strong>Quinoa:</strong> 80g/40g</div>
+                <div><strong>Riz:</strong> 60g/30g</div>
+                <div><strong>Pâtes:</strong> 80g/40g</div>
+                <div><strong>Avoine:</strong> 60g/30g</div>
+              </div>
+              <div>
+                <div><strong>Patate douce:</strong> 120g/60g</div>
+                <div><strong>Pain complet:</strong> 2/1 tranches</div>
+                <div><strong>Boulgour:</strong> 60g/30g</div>
+                <div><strong>Légumineuses:</strong> 80g/40g</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Protéines -->
+          <div class="session-card">
+            <h3 style="color: var(--text-primary); margin-bottom: var(--spacing-md);">🥩 Protéines (120g)</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md); color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5;">
+              <div>
+                <div>• Poulet</div>
+                <div>• Dinde</div>
+                <div>• Bœuf haché 5%</div>
+                <div>• Porc</div>
+              </div>
+              <div>
+                <div>• Œufs (2-3)</div>
+                <div>• Skyr (150g)</div>
+                <div>• Yaourt grec 0%</div>
+                <div>• Tofu</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Légumes -->
+          <div class="session-card">
+            <h3 style="color: var(--text-primary); margin-bottom: var(--spacing-md);">🥬 Légumes</h3>
+            <div style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5;">
+              <div style="margin-bottom: var(--spacing-sm);">
+                <strong>À volonté:</strong> Salade, épinards, tomates, concombre
+              </div>
+              <div>
+                <strong>200g/repas:</strong> Brocolis, courgettes, haricots verts, poivrons, champignons, aubergines, carottes
+              </div>
+            </div>
+          </div>
+
+          <!-- Lipides -->
+          <div class="session-card">
+            <h3 style="color: var(--text-primary); margin-bottom: var(--spacing-md);">🥑 Lipides</h3>
+            <div style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.5;">
+              <div>• Huile d'olive: 1 c.s. (15ml)</div>
+              <div>• Avocat: 1/2 avocat</div>
+              <div>• Amandes/noix: 10g</div>
+              <div>• Olives: 10 unités</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Timer HIIT -->
+  <div id="timerModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Timer HIIT</h2>
+        <button class="modal-close" id="closeTimerModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <div style="font-size: 1.125rem; color: var(--text-secondary); margin-bottom: var(--spacing-sm);" id="timerPhase">
+            Prêt à commencer
+          </div>
+          <div style="font-size: 1.25rem; font-weight: 600; color: var(--primary); margin-bottom: var(--spacing-md);" id="timerExercise">
+            Cliquez sur Démarrer
+          </div>
+          
+          <div style="font-size: 3rem; font-weight: 900; color: var(--primary); margin-bottom: var(--spacing-md); font-family: 'Courier New', monospace;" id="timerDisplay">
+            00:00
+          </div>
+          
+          <div class="progress-bar" style="margin-bottom: var(--spacing-md);">
+            <div class="progress-fill" id="timerProgressFill" style="width: 0%;"></div>
+          </div>
+          
+          <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--spacing-md);">
+            <div>Tour <span id="currentRound">0</span> / <span id="totalRounds">0</span></div>
+            <div>Exercice <span id="currentExercise">0</span> / <span id="totalExercises">0</span></div>
+          </div>
+          
+          <div style="display: flex; gap: var(--spacing-md); justify-content: center; flex-wrap: wrap;">
+            <button id="timerStart" class="btn btn-primary">Démarrer</button>
+            <button id="timerPause" class="btn btn-secondary hidden">Pause</button>
+            <button id="timerResume" class="btn btn-primary hidden">Reprendre</button>
+            <button id="timerStop" class="btn btn-secondary">Arrêter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const startDate = new Date("2025-07-22");
+    const endDate = new Date("2025-10-26");
+    const grid = document.getElementById("grid");
+    let allCards = [];
+    let currentFilter = 'all';
+    let timerInterval = null;
+    let currentHiitSession = null;
+    let isTimerRunning = false;
+    let isPaused = false;
+
+    // Fallback data
+    const fallbackDayPlans = {
+      "2025-07-22": {
+        titre: "MARDI 22 JUILLET - JOUR 9 (REPOS + REPRISE NUTRITION)",
+        seance: "Repos complet - Reprise nutrition",
+        objectif: "Récupération + Reprise des bonnes habitudes alimentaires",
+        resume: "Aucun entraînement - Focus sur l'alimentation",
+        nutritionMatin: "1 des 3 petits déjeuners au choix",
+        nutritionMidi: "1 protéine + 1 glucide + légumes (300g) + 1 lipide",
+        nutritionSoir: "1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)",
+        detailSeance: "Repos complet - Reprise nutrition",
+        conseil: "Reprends tes bonnes habitudes alimentaires en douceur.",
+        pourquoi: "Transition douce entre la récupération festival et la reprise de l'entraînement.",
+        type: "rest"
+      }
+    };
+
+    // Fonctions utilitaires
+    function formatDate(date) {
+      return date.toISOString().split('T')[0];
+    }
+
+    function loadData(dateStr) {
+      return JSON.parse(localStorage.getItem('day-' + dateStr)) || { 
+        sport: false, 
+        sportRun: false,
+        sportHiit: false,
+        nutritionMatin: false, 
+        nutritionMidi: false, 
+        nutritionSoir: false, 
+        noSnacking: false, 
+        weight: '' 
+      };
+    }
+
+    function saveData(dateStr, data) {
+      localStorage.setItem('day-' + dateStr, JSON.stringify(data));
+      updateStats();
+    }
+
+    function convertSessionsToDayPlans() {
+      const dayPlans = {};
+      
+      if (typeof sessions !== 'undefined' && Array.isArray(sessions)) {
+        sessions.forEach(session => {
+          dayPlans[session.date] = {
+            titre: session.title,
+            seance: session.title,
+            objectif: session.sections.find(s => s.title === "Objectif")?.content || "",
+            resume: session.sections.find(s => s.title === "Résumé de la séance")?.content || session.sections.find(s => s.title === "Résumé")?.content || "",
+            detailSeance: session.sections.find(s => s.title === "Détail")?.content || session.sections.find(s => s.title === "Détail de la séance")?.content || "",
+            conseil: session.sections.find(s => s.title === "Conseil")?.content || session.sections.find(s => s.title === "Conseil pour la séance")?.content || session.sections.find(s => s.title === "Conseils")?.content || "",
+            pourquoi: session.sections.find(s => s.title === "Pourquoi cette séance ?")?.content || "",
+            type: session.title.includes("REPOS") || session.title.includes("Repos") ? "rest" : session.semi ? "semi" : session.mar ? "marathon" : "recovery",
+            nutritionMatin: "1 des 3 petits déjeuners au choix",
+            nutritionMidi: "1 protéine + 1 glucide + légumes (300g) + 1 lipide",
+            nutritionSoir: "1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)"
+          };
+        });
+      }
+      
+      return dayPlans;
+    }
+
+    function isCompleteDay(data, plan) {
+      if (plan.type === 'recovery') {
+        return data.sportRun && data.sportHiit && data.nutritionMatin && data.nutritionMidi && data.nutritionSoir && data.noSnacking;
+      } else if (plan.type === 'festival') {
+        return data.sport && data.nutritionMatin && data.nutritionMidi && data.nutritionSoir;
+      } else if (plan.type === 'rest') {
+        return data.nutritionMatin && data.nutritionMidi && data.nutritionSoir && data.noSnacking;
+      } else {
+        return data.sport && data.nutritionMatin && data.nutritionMidi && data.nutritionSoir && data.noSnacking;
+      }
+    }
+
+    function getCompletionPercentage(data, plan) {
+      if (plan.type === 'recovery') {
+        const total = 6;
+        const completed = [data.sportRun, data.sportHiit, data.nutritionMatin, data.nutritionMidi, data.nutritionSoir, data.noSnacking]
+          .filter(Boolean).length;
+        return Math.round((completed / total) * 100);
+      } else if (plan.type === 'festival') {
+        const total = 4;
+        const completed = [data.sport, data.nutritionMatin, data.nutritionMidi, data.nutritionSoir]
+          .filter(Boolean).length;
+        return Math.round((completed / total) * 100);
+      } else if (plan.type === 'rest') {
+        const total = 4;
+        const completed = [data.nutritionMatin, data.nutritionMidi, data.nutritionSoir, data.noSnacking]
+          .filter(Boolean).length;
+        return Math.round((completed / total) * 100);
+      } else {
+        const total = 5;
+        const completed = [data.sport, data.nutritionMatin, data.nutritionMidi, data.nutritionSoir, data.noSnacking]
+          .filter(Boolean).length;
+        return Math.round((completed / total) * 100);
+      }
+    }
+
+    function getTypeIcon(type) {
+      switch(type) {
+        case 'recovery': return '🔄';
+        case 'vma': return '⚡';
+        case 'festival': return '🎵';
+        case 'rest': return '😴';
+        case 'tempo': return '🎯';
+        default: return '🏃';
+      }
+    }
+
+    function createCard(date) {
+      const dateStr = formatDate(date);
+      const data = loadData(dateStr);
+      const plan = window.dayPlans[dateStr] || {};
+      const today = new Date().toISOString().split('T')[0];
+      const isPast = dateStr < today;
+      const isToday = dateStr === today;
+      const isComplete = isCompleteDay(data, plan);
+      const completionPercent = getCompletionPercentage(data, plan);
+      const typeIcon = getTypeIcon(plan.type);
+
+      const container = document.createElement('div');
+      container.className = `session-card ${plan.type || 'endurance'} animate-fade-in`;
+      container.setAttribute('data-date', dateStr);
+      container.setAttribute('data-status', isComplete ? 'completed' : 'pending');
+
+      container.innerHTML = `
+        <div class="card-header">
+          <div style="display: flex; align-items: center;">
+            <div class="type-icon ${plan.type || 'endurance'}">${typeIcon}</div>
+            <div>
+              <div class="card-title">${date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })}</div>
+              <div class="card-subtitle">${plan.titre || `Jour ${Math.ceil((date - startDate) / (1000 * 60 * 60 * 24)) + 1}`}</div>
+            </div>
+          </div>
+          <div class="card-progress">
+            <div class="progress-number ${isComplete ? 'text-success' : ''}">${completionPercent}%</div>
+            <div class="progress-status ${isComplete ? 'completed' : ''} ${isToday ? 'today' : ''}">
+              ${isToday ? "Aujourd'hui" : isComplete ? "Terminé" : isPast ? "Passé" : "À venir"}
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: ${completionPercent}%;"></div>
+        </div>
+
+        ${plan.seance ? `
+          <button class="toggle-details" onclick="toggleDetails(this)">
+            <div class="toggle-header">
+              <div>
+                <div class="toggle-title">${plan.seance}</div>
+                <div class="toggle-subtitle">${plan.resume}</div>
+              </div>
+              <div class="toggle-arrow">▼</div>
+            </div>
+          </button>
+          <div class="session-details hidden">
+            <div class="detail-section">
+              <div class="detail-title">Objectif</div>
+              <div class="detail-content">${plan.objectif}</div>
+            </div>
+            <div class="detail-section">
+              <div class="detail-title">Détail de la séance</div>
+              <div class="detail-content" style="white-space: pre-line;">${plan.detailSeance}</div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-md);">
+              <div class="detail-section">
+                <div class="detail-title">Conseil</div>
+                <div class="detail-content">${plan.conseil}</div>
+              </div>
+              <div class="detail-section">
+                <div class="detail-title">Pourquoi cette séance</div>
+                <div class="detail-content">${plan.pourquoi}</div>
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        <div style="margin-bottom: var(--spacing-md);">
+          ${createCheckboxes(data, plan, dateStr)}
+        </div>
+
+        <div class="card-actions">
+          <div class="weight-section">
+            <input type="number" step="0.1" class="weight-input" placeholder="Poids" value="${data.weight}" onchange="updateWeight('${dateStr}', this.value)">
+            <span class="weight-label">kg</span>
+            ${createWeightDifferences(dateStr)}
+          </div>
+          <div class="action-buttons">
+            <button class="btn btn-secondary" onclick="openNutritionModal()">Guide nutrition</button>
+            ${plan.type === 'recovery' ? `<button class="btn btn-primary" onclick="openTimerModal('${dateStr}')">⏱️ Timer HIIT</button>` : ''}
+          </div>
+        </div>
+      `;
+
+      allCards.push(container);
+      return container;
+    }
+
+    function createCheckboxes(data, plan, dateStr) {
+      let html = '';
+      
+      if (plan.type === 'rest') {
+        // Pas de sport pour les jours de repos
+      } else if (plan.type === 'recovery') {
+        html += createCheckbox('Course récupération', data.sportRun, 'sportRun', dateStr);
+        html += createCheckbox('HIIT', data.sportHiit, 'sportHiit', dateStr);
+      } else if (plan.type === 'festival') {
+        html += createCheckbox('Journée festival profitée !', data.sport, 'sport', dateStr);
+      } else {
+        html += createCheckbox('Séance de sport', data.sport, 'sport', dateStr);
+      }
+
+      html += createCheckbox('Petit-déjeuner sain', data.nutritionMatin, 'nutritionMatin', dateStr);
+      html += createCheckbox('Déjeuner équilibré', data.nutritionMidi, 'nutritionMidi', dateStr);
+      html += createCheckbox('Dîner léger', data.nutritionSoir, 'nutritionSoir', dateStr);
+      html += createCheckbox('Pas de grignotage', data.noSnacking, 'noSnacking', dateStr);
+
+      return html;
+    }
+
+    function createCheckbox(label, checked, key, dateStr) {
+      return `
+        <div class="checkbox-container" onclick="toggleCheckbox('${dateStr}', '${key}')">
+          <div class="custom-checkbox ${checked ? 'checked' : ''}"></div>
+          <div class="checkbox-label ${checked ? 'checked' : ''}">${label}</div>
+        </div>
+      `;
+    }
+
+    function createWeightDifferences(dateStr) {
+      const differences = getWeightDifferences(dateStr);
+      if (!differences || dateStr === "2025-07-22") return '';
+      
+      let html = '<div class="weight-differences">';
+      if (differences.yesterday !== undefined) {
+        const diff = formatWeightDifference(differences.yesterday);
+        html += `<div class="weight-diff ${diff.class}">Veille: ${diff.text}</div>`;
+      }
+      if (differences.lastWeek !== undefined) {
+        const diff = formatWeightDifference(differences.lastWeek);
+        html += `<div class="weight-diff ${diff.class}">Semaine: ${diff.text}</div>`;
+      }
+      html += '</div>';
+      return html;
+    }
+
+    function getWeightDifferences(currentDate) {
+      const currentData = loadData(currentDate);
+      const currentWeight = parseFloat(currentData.weight);
+      
+      if (!currentWeight) return null;
+      
+      const date = new Date(currentDate);
+      const differences = {};
+      
+      // Poids de la veille
+      const yesterday = new Date(date);
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayData = loadData(formatDate(yesterday));
+      const yesterdayWeight = parseFloat(yesterdayData.weight);
+      
+      if (yesterdayWeight) {
+        differences.yesterday = currentWeight - yesterdayWeight;
+      }
+      
+      // Poids d'il y a une semaine
+      const lastWeek = new Date(date);
+      lastWeek.setDate(lastWeek.getDate() - 7);
+      const lastWeekData = loadData(formatDate(lastWeek));
+      const lastWeekWeight = parseFloat(lastWeekData.weight);
+      
+      if (lastWeekWeight) {
+        differences.lastWeek = currentWeight - lastWeekWeight;
+      }
+      
+      return differences;
+    }
+
+    function formatWeightDifference(diff) {
+      if (!diff) return { text: '', class: '' };
+      
+      const sign = diff > 0 ? '+' : '';
+      const className = diff > 0 ? 'positive' : diff < 0 ? 'negative' : '';
+      const arrow = diff > 0 ? '↗' : diff < 0 ? '↘' : '→';
+      
+      return {
+        text: `${sign}${diff.toFixed(1)}kg ${arrow}`,
+        class: className
+      };
+    }
+
+    // Event handlers
+    function toggleCheckbox(dateStr, key) {
+      const data = loadData(dateStr);
+      data[key] = !data[key];
+      saveData(dateStr, data);
+      updateCardAfterChange(dateStr);
+    }
+
+    function updateWeight(dateStr, value) {
+      const data = loadData(dateStr);
+      data.weight = value;
+      saveData(dateStr, data);
+      setTimeout(() => init(), 100);
+    }
+
+    function updateCardAfterChange(dateStr) {
+      const card = document.querySelector(`[data-date="${dateStr}"]`);
+      if (card) {
+        const data = loadData(dateStr);
+        const plan = window.dayPlans[dateStr] || {};
+        const isComplete = isCompleteDay(data, plan);
+        const completionPercent = getCompletionPercentage(data, plan);
+        
+        card.setAttribute('data-status', isComplete ? 'completed' : 'pending');
+        
+        const progressFill = card.querySelector('.progress-fill');
+        if (progressFill) {
+          progressFill.style.width = `${completionPercent}%`;
+        }
+        
+        const progressNumber = card.querySelector('.progress-number');
+        if (progressNumber) {
+          progressNumber.textContent = `${completionPercent}%`;
+          progressNumber.className = `progress-number ${isComplete ? 'text-success' : ''}`;
+        }
+        
+        const progressStatus = card.querySelector('.progress-status');
+        if (progressStatus && isComplete) {
+          progressStatus.textContent = 'Terminé';
+          progressStatus.className = 'progress-status completed';
+        }
+        
+        // Update checkboxes
+        const checkboxes = card.querySelectorAll('.custom-checkbox');
+        const labels = card.querySelectorAll('.checkbox-label');
+        
+        let index = 0;
+        if (plan.type === 'recovery') {
+          if (checkboxes[index]) {
+            checkboxes[index].className = `custom-checkbox ${data.sportRun ? 'checked' : ''}`;
+            labels[index].className = `checkbox-label ${data.sportRun ? 'checked' : ''}`;
+          }
+          index++;
+          if (checkboxes[index]) {
+            checkboxes[index].className = `custom-checkbox ${data.sportHiit ? 'checked' : ''}`;
+            labels[index].className = `checkbox-label ${data.sportHiit ? 'checked' : ''}`;
+          }
+          index++;
+        } else if (plan.type !== 'rest') {
+          if (checkboxes[index]) {
+            checkboxes[index].className = `custom-checkbox ${data.sport ? 'checked' : ''}`;
+            labels[index].className = `checkbox-label ${data.sport ? 'checked' : ''}`;
+          }
+          index++;
+        }
+        
+        // Nutrition checkboxes
+        const nutritionKeys = ['nutritionMatin', 'nutritionMidi', 'nutritionSoir', 'noSnacking'];
+        nutritionKeys.forEach(key => {
+          if (checkboxes[index]) {
+            checkboxes[index].className = `custom-checkbox ${data[key] ? 'checked' : ''}`;
+            labels[index].className = `checkbox-label ${data[key] ? 'checked' : ''}`;
+          }
+          index++;
+        });
+        
+        updateStats();
+      }
+    }
+
+    function toggleDetails(button) {
+      const details = button.nextElementSibling;
+      const arrow = button.querySelector('.toggle-arrow');
+      
+      if (details.classList.contains('hidden')) {
+        details.classList.remove('hidden');
+        arrow.textContent = '▲';
+        arrow.classList.add('open');
+      } else {
+        details.classList.add('hidden');
+        arrow.textContent = '▼';
+        arrow.classList.remove('open');
+      }
+    }
+
+    function openNutritionModal() {
+      document.getElementById('nutritionModal').classList.remove('hidden');
+    }
+
+    function openTimerModal(dateStr) {
+      document.getElementById('timerModal').classList.remove('hidden');
+      // Timer functionality would go here
+    }
+
+    function updateStats() {
+      const totalDays = Object.keys(window.dayPlans || {}).length;
+      const today = new Date();
+      const daysRemaining = Math.max(0, Math.ceil((endDate - today) / (1000 * 60 * 60 * 24)));
+      
+      let completedCount = 0;
+      Object.keys(window.dayPlans || {}).forEach(dateStr => {
+        const data = loadData(dateStr);
+        const plan = window.dayPlans[dateStr];
+        if (isCompleteDay(data, plan)) completedCount++;
+      });
+      
+      const progressPercentage = totalDays > 0 ? Math.round((completedCount / totalDays) * 100) : 0;
+      
+      // Update stats
+      const updateStat = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+      };
+      
+      updateStat('daysRemaining', daysRemaining);
+      updateStat('completedSessions', completedCount);
+      updateStat('progressPercentage', progressPercentage + '%');
+      updateStat('daysRemainingMobile', daysRemaining);
+      updateStat('completedSessionsMobile', completedCount);
+      updateStat('progressPercentageMobile', progressPercentage + '%');
+    }
+
+    function filterCards(filter) {
+      const today = new Date().toISOString().split('T')[0];
+      
+      allCards.forEach(card => {
+        const dateStr = card.getAttribute('data-date');
+        const status = card.getAttribute('data-status');
+        const isToday = dateStr === today;
+        
+        let show = false;
+        
+        switch(filter) {
+          case 'all':
+            show = true;
+            break;
+          case 'completed':
+            show = status === 'completed';
+            break;
+          case 'pending':
+            show = status === 'pending';
+            break;
+          case 'today':
+            show = isToday;
+            break;
+        }
+        
+        card.style.display = show ? 'block' : 'none';
+      });
+    }
+
+
+    // Initialization
+    function init() {
+      try {
+        grid.innerHTML = '';
+        allCards = [];
+        
+        const dayPlans = convertSessionsToDayPlans();
+        
+        if (Object.keys(dayPlans).length === 0) {
+          Object.assign(dayPlans, fallbackDayPlans);
+        }
+        
+        window.dayPlans = dayPlans;
+        
+        Object.keys(dayPlans).forEach(dateStr => {
+          const date = new Date(dateStr);
+          const card = createCard(date);
+          grid.appendChild(card);
+        });
+        
+        updateStats();
+        
+      } catch (error) {
+        console.error('Erreur lors de l\'initialisation:', error);
+      }
+    }
+
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((registration) => {
+            console.log('Service Worker enregistré avec succès:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('Échec de l\'enregistrement du Service Worker:', error);
+          });
+      });
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      init();
+      
+      // Filter buttons
+      document.querySelectorAll('[data-filter]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('[data-filter]').forEach(b => {
+            b.classList.remove('active');
+          });
+          btn.classList.add('active');
+          
+          currentFilter = btn.getAttribute('data-filter');
+          filterCards(currentFilter);
+        });
+      });
+      
+      // Modal close events
+      document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('nutritionModal').classList.add('hidden');
+      });
+      
+      document.getElementById('nutritionModal').addEventListener('click', (e) => {
+        if (e.target.id === 'nutritionModal') {
+          document.getElementById('nutritionModal').classList.add('hidden');
+        }
+      });
+      
+      document.getElementById('closeTimerModal').addEventListener('click', () => {
+        document.getElementById('timerModal').classList.add('hidden');
+      });
+      
+      document.getElementById('timerModal').addEventListener('click', (e) => {
+        if (e.target.id === 'timerModal') {
+          document.getElementById('timerModal').classList.add('hidden');
+        }
+      });
+      
+      
+      // Mobile stats display
+      const updateMobileStats = () => {
+        const isMobile = window.innerWidth <= 768;
+        const mobileStats = document.querySelector('.stats-mobile');
+        if (mobileStats) {
+          mobileStats.style.display = isMobile ? 'block' : 'none';
+        }
+      };
+      
+      updateMobileStats();
+      window.addEventListener('resize', updateMobileStats);
+    });
+  </script>
+</body>
+</html>
