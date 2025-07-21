@@ -1,57 +1,80 @@
 # CLAUDE.md
 
-Ce fichier fournit des conseils à Claude Code (claude.ai/code) pour travailler avec le code de ce dépôt.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Vue d'ensemble du projet
+## Project Overview
 
-Il s'agit d'une application web de suivi d'entraînement marathon et de poids pour la préparation du 3 juillet au 26 octobre 2025. L'application est une webapp monopage en français qui aide à suivre les séances d'entraînement quotidiennes et les progrès de poids corporel.
+This is a marathon training and weight tracking web application for preparation from July 22nd to October 26th, 2025. The application is a French single-page webapp that helps track daily training sessions and body weight progress.
+
+## Commands
+
+### Running the Application
+
+```bash
+# No build process required - open directly in browser
+open index.html
+```
+
+### Development
+
+- No package manager, build tools, or server required
+- Direct file editing and browser refresh for development
+- Uses browser localStorage for data persistence
 
 ## Architecture
 
-Le projet consiste en une application web côté client simple sans système de build ni dépendances backend :
+This is a client-side only web application with no build system or backend dependencies:
 
-- **road_to_rennes.html** : Fichier HTML principal contenant l'interface utilisateur complète et la logique de l'application
-- **sessions-data.js** : Structure de données des séances d'entraînement avec des plans d'entraînement détaillés
-- **timeline-render.js** : Module JavaScript pour le rendu de la timeline des séances (actuellement non utilisé dans le HTML principal)
+- **index.html** : Main HTML file containing complete UI and application logic (note: was previously `road_to_rennes.html`)
+- **sessions-data.js** : Training session data structure with detailed workout plans
+- **manifest.json** : PWA manifest for mobile app-like experience
+- **sw.js** : Service Worker for offline functionality
+- **timeline-render.js** : JavaScript module for timeline rendering (currently unused in main HTML)
 
-### Architecture des données
+### Data Architecture
 
-- **Structure des données de séance** : Chaque séance dans `sessions-data.js` contient :
-  - `date` : Chaîne de date ISO
-  - `title` : Nom/description de la séance
-  - `semi`/`mar` : Indicateurs booléens pour les types de course
-  - `done` : Statut de completion
-  - `sections` : Tableau d'informations détaillées (objectif, résumé, détails, conseils, justification)
+- **Session Data Structure**: Each session in `sessions-data.js` contains:
+  - `date`: ISO date string (YYYY-MM-DD)
+  - `title`: Session name/description
+  - `semi`/`mar`: Boolean indicators for race types
+  - `done`: Completion status
+  - `sections`: Array of detailed information (objective, summary, details, tips, justification)
 
-- **Local Storage** : Les données utilisateur (statut de completion, poids) sont persistées dans le localStorage du navigateur avec des clés comme `day-YYYY-MM-DD`
+- **LocalStorage**: User data (completion status, weight) is persisted in browser localStorage with keys like `day-YYYY-MM-DD`
 
-### Composants UI
+- **Data Flow**: `sessions-data.js` contains training plans → converted to `dayPlans` object in main HTML → merged with localStorage data for UI rendering
 
-- **Layout basé sur des cartes** : Chaque jour est rendu comme une carte extensible montrant les détails d'entraînement
-- **Éléments interactifs** : Cases à cocher pour le suivi de completion, champs numériques pour le poids
-- **Design responsive** : Utilise les classes Tailwind CSS pour un layout responsive mobile-first
+### Key Implementation Details
 
-## Développement
+- **Inline JavaScript**: All application logic is contained within the main HTML file using inline `<script>` tags
+- **Data Conversion**: The `convertSessionsToDayPlans()` function transforms the `sessions` array from `sessions-data.js` into the internal `dayPlans` object format
+- **State Management**: User interactions auto-save to localStorage via `saveData(dateStr, data)` function
+- **Card-based UI**: Each training day is rendered as an expandable card showing workout details
+- **Type System**: Sessions are categorized by type (rest, recovery, vma, tempo, festival, etc.) affecting UI styling and completion logic
 
-### Exécuter l'application
+### PWA Features
 
-Ouvrir `road_to_rennes.html` directement dans un navigateur web - aucun processus de build ou serveur requis.
+- **Service Worker**: `sw.js` provides offline functionality and caches resources
+- **Web App Manifest**: `manifest.json` enables installation as a mobile app
+- **Responsive Design**: Mobile-first design using Tailwind CSS via CDN
 
-### Détails d'implémentation clés
+### Styling and UI
 
-- Le fichier HTML principal contient du JavaScript inline pour toute la logique de l'application
-- Les données sont chargées depuis `sessions-data.js` via le tableau global `sessions` (bien qu'utilisant actuellement l'objet inline `dayPlans`)
-- La fonctionnalité timeline existe dans `timeline-render.js` mais n'est pas intégrée avec l'application principale
-- Tout le styling utilise Tailwind CSS via CDN
+- **CSS Variables**: Custom design system using CSS custom properties in `:root`
+- **Tailwind CSS**: Utility-first CSS framework loaded via CDN
+- **Interactive Elements**: Custom checkbox styling, modals, progress bars
+- **Themes**: Different session types have color-coded card borders and icons
 
-### Gestion des données
+### Core Functions to Understand
 
-- Les données de completion de séance et de poids se sauvegardent automatiquement dans localStorage lors de l'interaction utilisateur
-- Aucune persistence côté serveur - toutes les données sont côté client uniquement
-- Le formatage des dates utilise des chaînes ISO (YYYY-MM-DD) pour la cohérence
+- `createCard(date)`: Main function that renders each training day card
+- `isCompleteDay(data, plan)`: Determines if a day's activities are fully completed based on session type
+- `updateStats()`: Updates progress statistics in header
+- `toggleDetails()`: Handles expanding/collapsing session details
+- `getHiitConfigForDate()`: Parses HIIT workout details from session data for timer functionality
 
-### Étendre l'application
+### Extending the Application
 
-- Ajouter de nouvelles séances d'entraînement en étendant l'objet `dayPlans` dans le fichier HTML ou le tableau `sessions` dans `sessions-data.js`
-- Modifier le layout des cartes en mettant à jour la fonction `createCard()`
-- Le renderer de timeline dans `timeline-render.js` fournit un format d'affichage alternatif qui pourrait être intégré
+- **Adding Sessions**: Extend the `sessions` array in `sessions-data.js` with new session objects
+- **Modifying UI**: Update the `createCard()` function in the main HTML file
+- **Adding Features**: The timer modal and nutrition guide demonstrate how to add new functionality

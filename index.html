@@ -405,6 +405,30 @@
       box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
     }
 
+    /* Commentaire input */
+    .comment-input {
+      width: 100%;
+      min-height: 60px;
+      padding: var(--spacing-sm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      resize: vertical;
+      font-family: inherit;
+      line-height: 1.4;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .comment-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    }
+
+    .comment-input::placeholder {
+      color: var(--text-tertiary);
+    }
+
     /* Modal */
     .modal {
       position: fixed;
@@ -981,8 +1005,10 @@
         nutritionMatin: false, 
         nutritionMidi: false, 
         nutritionSoir: false, 
-        noSnacking: false, 
-        weight: '' 
+        noSnacking: false,
+        sleep8h: false,
+        weight: '',
+        comment: ''
       };
     }
 
@@ -1004,7 +1030,9 @@
             detailSeance: session.sections.find(s => s.title === "Détail")?.content || session.sections.find(s => s.title === "Détail de la séance")?.content || "",
             conseil: session.sections.find(s => s.title === "Conseil")?.content || session.sections.find(s => s.title === "Conseil pour la séance")?.content || session.sections.find(s => s.title === "Conseils")?.content || "",
             pourquoi: session.sections.find(s => s.title === "Pourquoi cette séance ?")?.content || "",
-            type: session.title.includes("REPOS") || session.title.includes("Repos") ? "rest" : session.semi ? "semi" : session.mar ? "marathon" : "recovery",
+            type: session.title.includes("REPOS") || session.title.includes("Repos") ? "rest" : 
+                  session.title.includes("HIIT") || session.title.includes("Récupération") ? "recovery" :
+                  session.semi ? "semi" : session.mar ? "marathon" : "endurance",
             nutritionMatin: "1 des 3 petits déjeuners au choix",
             nutritionMidi: "1 protéine + 1 glucide + légumes (300g) + 1 lipide",
             nutritionSoir: "1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)"
@@ -1017,35 +1045,35 @@
 
     function isCompleteDay(data, plan) {
       if (plan.type === 'recovery') {
-        return data.sportRun && data.sportHiit && data.nutritionMatin && data.nutritionMidi && data.nutritionSoir && data.noSnacking;
+        return data.sportRun && data.sportHiit && data.nutritionMatin && data.nutritionMidi && data.nutritionSoir && data.noSnacking && data.sleep8h;
       } else if (plan.type === 'festival') {
-        return data.sport && data.nutritionMatin && data.nutritionMidi && data.nutritionSoir;
+        return data.sport && data.nutritionMatin && data.nutritionMidi && data.nutritionSoir && data.sleep8h;
       } else if (plan.type === 'rest') {
-        return data.nutritionMatin && data.nutritionMidi && data.nutritionSoir && data.noSnacking;
+        return data.nutritionMatin && data.nutritionMidi && data.nutritionSoir && data.noSnacking && data.sleep8h;
       } else {
-        return data.sport && data.nutritionMatin && data.nutritionMidi && data.nutritionSoir && data.noSnacking;
+        return data.sport && data.nutritionMatin && data.nutritionMidi && data.nutritionSoir && data.noSnacking && data.sleep8h;
       }
     }
 
     function getCompletionPercentage(data, plan) {
       if (plan.type === 'recovery') {
-        const total = 6;
-        const completed = [data.sportRun, data.sportHiit, data.nutritionMatin, data.nutritionMidi, data.nutritionSoir, data.noSnacking]
+        const total = 7;
+        const completed = [data.sportRun, data.sportHiit, data.nutritionMatin, data.nutritionMidi, data.nutritionSoir, data.noSnacking, data.sleep8h]
           .filter(Boolean).length;
         return Math.round((completed / total) * 100);
       } else if (plan.type === 'festival') {
-        const total = 4;
-        const completed = [data.sport, data.nutritionMatin, data.nutritionMidi, data.nutritionSoir]
+        const total = 5;
+        const completed = [data.sport, data.nutritionMatin, data.nutritionMidi, data.nutritionSoir, data.sleep8h]
           .filter(Boolean).length;
         return Math.round((completed / total) * 100);
       } else if (plan.type === 'rest') {
-        const total = 4;
-        const completed = [data.nutritionMatin, data.nutritionMidi, data.nutritionSoir, data.noSnacking]
+        const total = 5;
+        const completed = [data.nutritionMatin, data.nutritionMidi, data.nutritionSoir, data.noSnacking, data.sleep8h]
           .filter(Boolean).length;
         return Math.round((completed / total) * 100);
       } else {
-        const total = 5;
-        const completed = [data.sport, data.nutritionMatin, data.nutritionMidi, data.nutritionSoir, data.noSnacking]
+        const total = 6;
+        const completed = [data.sport, data.nutritionMatin, data.nutritionMidi, data.nutritionSoir, data.noSnacking, data.sleep8h]
           .filter(Boolean).length;
         return Math.round((completed / total) * 100);
       }
@@ -1135,6 +1163,16 @@
           ${createCheckboxes(data, plan, dateStr)}
         </div>
 
+        <!-- Commentaire de la journée -->
+        <div style="margin-bottom: var(--spacing-md);">
+          <label for="comment-${dateStr}" style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--spacing-xs); display: block;">💭 Commentaire sur la journée :</label>
+          <textarea 
+            id="comment-${dateStr}" 
+            class="comment-input" 
+            placeholder="Comment s'est passée cette journée ? Ressenti, difficultés, réussites..." 
+            onchange="updateComment('${dateStr}', this.value)">${data.comment || ''}</textarea>
+        </div>
+
         <div class="card-actions">
           <div class="weight-section">
             <input type="number" step="0.1" class="weight-input" placeholder="Poids" value="${data.weight}" onchange="updateWeight('${dateStr}', this.value)">
@@ -1170,6 +1208,7 @@
       html += createCheckbox('Déjeuner équilibré', data.nutritionMidi, 'nutritionMidi', dateStr);
       html += createCheckbox('Dîner léger', data.nutritionSoir, 'nutritionSoir', dateStr);
       html += createCheckbox('Pas de grignotage', data.noSnacking, 'noSnacking', dateStr);
+      html += createCheckbox('Sommeil 8h 😴', data.sleep8h, 'sleep8h', dateStr);
 
       return html;
     }
@@ -1260,6 +1299,12 @@
       setTimeout(() => init(), 100);
     }
 
+    function updateComment(dateStr, value) {
+      const data = loadData(dateStr);
+      data.comment = value;
+      saveData(dateStr, data);
+    }
+
     function updateCardAfterChange(dateStr) {
       const card = document.querySelector(`[data-date="${dateStr}"]`);
       if (card) {
@@ -1311,8 +1356,8 @@
           index++;
         }
         
-        // Nutrition checkboxes
-        const nutritionKeys = ['nutritionMatin', 'nutritionMidi', 'nutritionSoir', 'noSnacking'];
+        // Nutrition and sleep checkboxes
+        const nutritionKeys = ['nutritionMatin', 'nutritionMidi', 'nutritionSoir', 'noSnacking', 'sleep8h'];
         nutritionKeys.forEach(key => {
           if (checkboxes[index]) {
             checkboxes[index].className = `custom-checkbox ${data[key] ? 'checked' : ''}`;
@@ -1346,7 +1391,291 @@
 
     function openTimerModal(dateStr) {
       document.getElementById('timerModal').classList.remove('hidden');
-      // Timer functionality would go here
+      currentHiitSession = getHiitConfigForDate(dateStr);
+      initializeTimer();
+    }
+
+    // Configuration des timers HIIT spécifiques selon les séances
+    function getHiitConfigForDate(dateStr) {
+      const plan = window.dayPlans[dateStr];
+      if (!plan || !plan.detailSeance) {
+        console.log('Pas de plan ou de detailSeance, utilisation config par défaut');
+        return getDefaultHiitConfig();
+      }
+
+      const detail = plan.detailSeance;
+      console.log('Détail de la séance:', detail);
+      
+      // Extraire les exercices et durées du détail de la séance
+      const hiitMatch = detail.match(/HIIT[^:]*:\s*\n([\s\S]*?)(?=\n\n|\n[A-Z]|$)/);
+      if (!hiitMatch) {
+        console.log('Pas de section HIIT trouvée');
+        return getDefaultHiitConfig();
+      }
+
+      const hiitSection = hiitMatch[1];
+      console.log('Section HIIT:', hiitSection);
+      
+      // Extraire le nombre de tours
+      const toursMatch = hiitSection.match(/(\d+)\s*tours?\s*de\s*:/);
+      const rounds = toursMatch ? parseInt(toursMatch[1]) : 4;
+      console.log('Nombre de tours:', rounds);
+      
+      // Extraire les exercices (exclure les lignes de repos)
+      const exerciseLines = hiitSection.split('\n').filter(line => 
+        line.trim().startsWith('•') && !line.toLowerCase().includes('repos')
+      );
+      console.log('Lignes d\'exercices:', exerciseLines);
+      
+      const exercises = exerciseLines.map(line => {
+        const match = line.match(/•\s*(.+?)\s*\((\d+)s\)/);
+        if (match) {
+          return { name: match[1], duration: parseInt(match[2]) };
+        }
+        return { name: line.replace('•', '').trim(), duration: 30 };
+      });
+      console.log('Exercices extraits:', exercises);
+
+      // Extraire le temps de repos - format différent selon les séances
+      let restDuration = 60; // 1 minute par défaut
+      const reposMatch = hiitSection.match(/•?\s*Repos\s*\((\d+)(?:min(\d+)?s?|s)\)/);
+      
+      if (reposMatch) {
+        const firstNumber = parseInt(reposMatch[1]);
+        const secondNumber = reposMatch[2] ? parseInt(reposMatch[2]) : 0;
+        
+        // Si le premier nombre est suivi de "min", c'est des minutes
+        if (reposMatch[0].includes(reposMatch[1] + 'min')) {
+          restDuration = firstNumber * 60 + secondNumber;
+        } else {
+          // Sinon, c'est des secondes
+          restDuration = firstNumber;
+        }
+      }
+      console.log('Durée de repos:', restDuration, 'secondes');
+
+      const config = {
+        warmup: 0, // Pas d'échauffement
+        rounds: rounds,
+        exercises: exercises,
+        rest: restDuration,
+        cooldown: 0 // Pas de retour au calme
+      };
+      console.log('Configuration HIIT finale:', config);
+      
+      return config;
+    }
+
+    function getDefaultHiitConfig() {
+      return {
+        warmup: 0,
+        rounds: 4,
+        exercises: [
+          { name: "Pompes", duration: 30 },
+          { name: "Planche", duration: 30 },
+          { name: "Burpees", duration: 30 },
+          { name: "Gainage", duration: 30 }
+        ],
+        rest: 60,
+        cooldown: 0
+      };
+    }
+
+    let timerState = {
+      phase: 'ready', // ready, warmup, work, rest, cooldown, finished
+      currentRound: 0,
+      currentExercise: 0,
+      timeLeft: 0,
+      totalTime: 0,
+      exerciseList: []
+    };
+
+    function initializeTimer() {
+      if (!currentHiitSession) {
+        currentHiitSession = getDefaultHiitConfig();
+      }
+      
+      timerState = {
+        phase: 'ready',
+        currentRound: 0,
+        currentExercise: 0,
+        timeLeft: 0,
+        totalTime: 0,
+        exerciseList: currentHiitSession.exercises.map(ex => ex.name)
+      };
+      
+      updateTimerDisplay();
+      resetTimerButtons();
+    }
+
+    function updateTimerDisplay() {
+      const display = document.getElementById('timerDisplay');
+      const phase = document.getElementById('timerPhase');
+      const exercise = document.getElementById('timerExercise');
+      const currentRound = document.getElementById('currentRound');
+      const totalRounds = document.getElementById('totalRounds');
+      const currentExerciseNum = document.getElementById('currentExercise');
+      const totalExercises = document.getElementById('totalExercises');
+      const progressFill = document.getElementById('timerProgressFill');
+      
+      // Format time
+      const minutes = Math.floor(timerState.timeLeft / 60);
+      const seconds = timerState.timeLeft % 60;
+      display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      
+      // Update phase and exercise
+      switch(timerState.phase) {
+        case 'ready':
+          if (phase) phase.textContent = 'Prêt à commencer';
+          if (exercise) exercise.textContent = 'Cliquez sur Démarrer';
+          break;
+        case 'work':
+          if (phase) phase.textContent = 'Travail';
+          if (exercise) exercise.textContent = timerState.exerciseList[timerState.currentExercise] || 'Exercice';
+          break;
+        case 'rest':
+          if (phase) phase.textContent = 'Repos';
+          if (exercise) exercise.textContent = 'Récupération';
+          break;
+        case 'finished':
+          if (phase) phase.textContent = 'Terminé !';
+          if (exercise) exercise.textContent = 'Félicitations !';
+          break;
+      }
+      
+      // Update round and exercise counters
+      if (currentRound) currentRound.textContent = timerState.currentRound;
+      if (totalRounds) totalRounds.textContent = currentHiitSession ? currentHiitSession.rounds : 4;
+      if (currentExerciseNum) currentExerciseNum.textContent = timerState.currentExercise + 1;
+      if (totalExercises) totalExercises.textContent = currentHiitSession ? currentHiitSession.exercises.length : 4;
+      
+      // Update progress bar
+      let progress = 0;
+      if (timerState.totalTime > 0) {
+        progress = ((timerState.totalTime - timerState.timeLeft) / timerState.totalTime) * 100;
+      }
+      progressFill.style.width = `${progress}%`;
+    }
+
+    function resetTimerButtons() {
+      document.getElementById('timerStart').classList.remove('hidden');
+      document.getElementById('timerPause').classList.add('hidden');
+      document.getElementById('timerResume').classList.add('hidden');
+      isTimerRunning = false;
+      isPaused = false;
+    }
+
+    function startTimer() {
+      if (timerState.phase === 'ready') {
+        // Commencer directement par le premier exercice
+        timerState.phase = 'work';
+        timerState.currentRound = 1;
+        timerState.currentExercise = 0;
+        timerState.timeLeft = currentHiitSession.exercises[0].duration;
+        
+        // Calculer le temps total : tous les exercices + repos entre les tours (pas après le dernier)
+        const totalExerciseTime = currentHiitSession.exercises.reduce((sum, ex) => sum + ex.duration, 0);
+        const totalExerciseTimeAllRounds = totalExerciseTime * currentHiitSession.rounds;
+        const totalRestTime = currentHiitSession.rest * (currentHiitSession.rounds - 1); // Repos entre tours seulement
+        timerState.totalTime = totalExerciseTimeAllRounds + totalRestTime;
+      }
+      
+      isTimerRunning = true;
+      isPaused = false;
+      
+      document.getElementById('timerStart').classList.add('hidden');
+      document.getElementById('timerPause').classList.remove('hidden');
+      document.getElementById('timerResume').classList.add('hidden');
+      
+      timerInterval = setInterval(() => {
+        if (timerState.timeLeft > 0) {
+          timerState.timeLeft--;
+          updateTimerDisplay();
+        } else {
+          nextPhase();
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+      isPaused = true;
+      
+      document.getElementById('timerPause').classList.add('hidden');
+      document.getElementById('timerResume').classList.remove('hidden');
+    }
+
+    function resumeTimer() {
+      startTimer();
+    }
+
+    function stopTimer() {
+      clearInterval(timerInterval);
+      timerState = {
+        phase: 'ready',
+        currentRound: 0,
+        currentExercise: 0,
+        timeLeft: 0,
+        totalTime: 0,
+        exerciseList: currentHiitSession ? currentHiitSession.exercises.map(ex => ex.name) : []
+      };
+      updateTimerDisplay();
+      resetTimerButtons();
+    }
+
+    function nextPhase() {
+      console.log('NextPhase - État actuel:', {
+        phase: timerState.phase,
+        currentRound: timerState.currentRound,
+        currentExercise: timerState.currentExercise,
+        totalRounds: currentHiitSession.rounds,
+        totalExercises: currentHiitSession.exercises.length
+      });
+      
+      switch(timerState.phase) {
+        case 'work':
+          // Après un exercice, vérifier s'il y a un exercice suivant dans le tour
+          timerState.currentExercise++;
+          
+          // Si on a encore des exercices dans ce tour
+          if (timerState.currentExercise < currentHiitSession.exercises.length) {
+            // Exercice suivant directement
+            timerState.timeLeft = currentHiitSession.exercises[timerState.currentExercise].duration;
+            console.log('Exercice suivant:', currentHiitSession.exercises[timerState.currentExercise].name);
+          } else {
+            // Fin du tour - vérifier s'il y a encore des tours
+            if (timerState.currentRound < currentHiitSession.rounds) {
+              // Repos entre les tours
+              timerState.phase = 'rest';
+              timerState.timeLeft = currentHiitSession.rest;
+              console.log('Repos entre tours, durée:', currentHiitSession.rest);
+            } else {
+              // Fin de la séance
+              timerState.phase = 'finished';
+              console.log('Séance terminée!');
+              clearInterval(timerInterval);
+              resetTimerButtons();
+            }
+          }
+          break;
+          
+        case 'rest':
+          // Après le repos, commencer le tour suivant
+          timerState.currentRound++;
+          timerState.currentExercise = 0;
+          timerState.phase = 'work';
+          timerState.timeLeft = currentHiitSession.exercises[0].duration;
+          console.log('Début tour', timerState.currentRound, '- Premier exercice:', currentHiitSession.exercises[0].name);
+          break;
+      }
+      
+      updateTimerDisplay();
+      
+      // Son de notification (optionnel)
+      if ('vibrate' in navigator) {
+        navigator.vibrate(200);
+      }
     }
 
     function updateStats() {
@@ -1497,6 +1826,12 @@
       
       updateMobileStats();
       window.addEventListener('resize', updateMobileStats);
+
+      // Timer event listeners
+      document.getElementById('timerStart').addEventListener('click', startTimer);
+      document.getElementById('timerPause').addEventListener('click', pauseTimer);
+      document.getElementById('timerResume').addEventListener('click', resumeTimer);
+      document.getElementById('timerStop').addEventListener('click', stopTimer);
     });
   </script>
 </body>
