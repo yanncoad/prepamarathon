@@ -638,23 +638,27 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      padding: 12px 8px 8px 8px;
+      padding: 8px 4px 12px 4px;
       max-width: 100%;
+      min-height: 60px;
     }
 
     .bottom-nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 8px 12px;
+      justify-content: center;
+      padding: 4px 2px;
       color: var(--text-tertiary);
       text-decoration: none;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
-      min-width: 0;
+      min-width: 50px;
+      max-width: 60px;
       flex: 1;
       position: relative;
-      border-radius: 12px;
+      border-radius: 8px;
+      height: 52px;
     }
 
     .bottom-nav-item:hover {
@@ -686,18 +690,19 @@
     }
 
     .bottom-nav-icon {
-      width: 24px;
-      height: 24px;
-      margin-bottom: 4px;
+      width: 20px;
+      height: 20px;
+      margin-bottom: 2px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
+      flex-shrink: 0;
     }
 
     .bottom-nav-icon svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       fill: currentColor;
       transition: all 0.3s ease;
     }
@@ -717,12 +722,16 @@
     }
 
     .bottom-nav-label {
-      font-size: 0.6rem;
-      font-weight: 600;
+      font-size: 0.65rem;
+      font-weight: 500;
       text-align: center;
       line-height: 1;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
       text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
     }
 
     /* Mobile body padding */
@@ -747,7 +756,7 @@
       }
 
       body {
-        padding-bottom: 80px;
+        padding-bottom: 85px;
         font-size: 16px; /* Prevent zoom on iOS */
       }
 
@@ -1128,17 +1137,208 @@
       height: 16px;
     }
 
-    /* Bandeau Strava amélioré */
-    .strava-summary-enhanced {
-      background: linear-gradient(135deg, #fc4c02 0%, #ff6b35 100%);
-      color: white;
-      border-radius: var(--radius-lg);
-      padding: 0;
+    /* Nouveau bandeau Strava minimaliste */
+    .strava-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid #fc4c02;
+      border-radius: var(--radius);
+      padding: var(--spacing-md);
       margin: var(--spacing-md) 0;
-      box-shadow: var(--shadow-xl);
-      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
       position: relative;
-      animation: slideInUp 0.3s ease;
+    }
+
+    .strava-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-1px);
+    }
+
+    /* Header du bandeau Strava */
+    .strava-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .strava-info {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      flex: 1;
+    }
+
+    .strava-badge {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      background: #fc4c02;
+      color: white;
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .strava-icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    .activity-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .strava-actions-mini {
+      display: flex;
+      gap: var(--spacing-xs);
+    }
+
+    .action-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .action-btn:hover {
+      background: var(--surface-variant);
+      color: var(--text-primary);
+      transform: scale(1.05);
+    }
+
+    .action-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .view-btn:hover {
+      background: #fc4c02;
+      color: white;
+      border-color: #fc4c02;
+    }
+
+    .delete-btn:hover {
+      background: var(--error);
+      color: white;
+      border-color: var(--error);
+    }
+
+    /* Stats horizontales */
+    .strava-stats-horizontal {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface-variant);
+      border-radius: var(--radius-sm);
+      padding: var(--spacing-sm) var(--spacing-md);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .stat-number {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .stat-unit {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+      margin: 0 var(--spacing-sm);
+    }
+
+    /* Comparaisons minimales */
+    .strava-comparison-mini {
+      display: flex;
+      gap: var(--spacing-xs);
+      justify-content: center;
+    }
+
+    .comp-badge {
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .comp-badge.positive {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .comp-badge.negative {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    /* Responsive pour mobile */
+    @media (max-width: 640px) {
+      .strava-card-header {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        align-items: stretch;
+      }
+
+      .strava-info {
+        justify-content: space-between;
+      }
+
+      .strava-actions-mini {
+        justify-content: center;
+      }
+
+      .strava-stats-horizontal {
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+      }
+
+      .stat-divider {
+        display: none;
+      }
+
+      .stat-item {
+        min-width: 60px;
+      }
     }
 
     .strava-summary-enhanced::before {
@@ -1158,7 +1358,7 @@
     }
 
     .strava-summary-enhanced .strava-header {
-      padding: var(--spacing-md);
+      padding: var(--spacing-sm);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -1172,8 +1372,8 @@
     }
 
     .strava-logo {
-      width: 28px;
-      height: 28px;
+      width: 20px;
+      height: 20px;
       flex-shrink: 0;
     }
 
@@ -1184,12 +1384,12 @@
 
     .activity-name {
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.875rem;
       line-height: 1.2;
     }
 
     .activity-type {
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       opacity: 0.8;
     }
 
@@ -1201,11 +1401,11 @@
     .strava-link-btn, .strava-remove-btn {
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 8px 12px;
+      gap: 4px;
+      padding: 6px 8px;
       border-radius: var(--radius);
       text-decoration: none;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       font-weight: 500;
       transition: all 0.2s ease;
       border: none;
@@ -1234,17 +1434,17 @@
     }
 
     .strava-link-btn svg, .strava-remove-btn svg {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
     }
 
 
     /* Grille de stats principales */
     .strava-stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: var(--spacing-sm);
-      padding: var(--spacing-md);
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 6px;
+      padding: var(--spacing-sm);
       background: rgba(0,0,0,0.1);
     }
 
@@ -1252,7 +1452,7 @@
       background: rgba(255,255,255,0.15);
       backdrop-filter: blur(10px);
       border-radius: var(--radius);
-      padding: var(--spacing-md);
+      padding: var(--spacing-sm);
       text-align: center;
       transition: transform 0.2s ease;
       border: 1px solid rgba(255,255,255,0.2);
@@ -1272,8 +1472,8 @@
     }
 
     .stat-icon {
-      font-size: 1.5rem;
-      margin-bottom: 4px;
+      font-size: 1.2rem;
+      margin-bottom: 2px;
       display: block;
     }
 
@@ -1283,24 +1483,24 @@
     }
 
     .stat-value {
-      font-size: 1.25rem;
+      font-size: 1rem;
       font-weight: 700;
       line-height: 1.2;
-      margin-bottom: 2px;
+      margin-bottom: 1px;
     }
 
     .stat-label {
-      font-size: 0.75rem;
+      font-size: 0.65rem;
       opacity: 0.9;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
     }
 
     /* Stats additionnelles */
     .strava-extra-stats {
       display: flex;
       justify-content: space-around;
-      padding: var(--spacing-md);
+      padding: var(--spacing-sm);
       background: rgba(0,0,0,0.1);
       border-top: 1px solid rgba(255,255,255,0.1);
     }
@@ -1313,40 +1513,40 @@
     .extra-value {
       display: block;
       font-weight: 600;
-      font-size: 0.875rem;
-      margin-bottom: 2px;
+      font-size: 0.75rem;
+      margin-bottom: 1px;
     }
 
     .extra-label {
-      font-size: 0.75rem;
+      font-size: 0.65rem;
       opacity: 0.8;
     }
 
     /* Comparaisons améliorées */
     .strava-comparison-enhanced {
-      padding: var(--spacing-md);
+      padding: var(--spacing-sm);
       background: rgba(0,0,0,0.15);
       border-top: 1px solid rgba(255,255,255,0.1);
     }
 
     .comparison-title {
       font-weight: 600;
-      margin-bottom: var(--spacing-sm);
-      font-size: 0.875rem;
+      margin-bottom: var(--spacing-xs);
+      font-size: 0.75rem;
       opacity: 0.9;
     }
 
     .comparison-items {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--spacing-sm);
+      gap: var(--spacing-xs);
     }
 
     .strava-comparison-enhanced .comparison-item {
       background: rgba(255,255,255,0.2);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.65rem;
       font-weight: 600;
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255,255,255,0.3);
@@ -1365,7 +1565,25 @@
     /* Responsive */
     @media (max-width: 768px) {
       .strava-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+      }
+      
+      .stat-card {
+        padding: 8px;
+      }
+      
+      .stat-icon {
+        font-size: 1.2rem;
+        margin-bottom: 2px;
+      }
+      
+      .stat-value {
+        font-size: 1rem;
+      }
+      
+      .stat-label {
+        font-size: 0.6rem;
       }
       
       .strava-summary-enhanced .strava-actions {
@@ -2367,31 +2585,26 @@
 
     // Strava Integration Functions
     function createStravaVignette(stravaData, dateStr) {
-      const elevationGain = Math.floor(Math.random() * 200) + 50; // Simulation dénivelé
-      const kudos = Math.floor(Math.random() * 20) + 5; // Simulation kudos
-      const segments = Math.floor(Math.random() * 3) + 1; // Simulation segments
-      
       return `
-        <div class="strava-summary-enhanced">
-          <!-- Header avec logo et actions -->
-          <div class="strava-header">
-            <div class="strava-brand">
-              <svg class="strava-logo" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.172"/>
-              </svg>
-              <div class="strava-title">
-                <span class="activity-name">${stravaData.name}</span>
-                <span class="activity-type">Course à pied</span>
+        <div class="strava-card">
+          <!-- Header minimaliste -->
+          <div class="strava-card-header">
+            <div class="strava-info">
+              <div class="strava-badge">
+                <svg class="strava-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.172"/>
+                </svg>
+                <span>Strava</span>
               </div>
+              <span class="activity-title">${stravaData.name}</span>
             </div>
-            <div class="strava-actions">
-              <a href="${stravaData.link}" target="_blank" class="strava-link-btn">
+            <div class="strava-actions-mini">
+              <a href="${stravaData.link}" target="_blank" class="action-btn view-btn" title="Voir sur Strava">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
                 </svg>
-                Voir sur Strava
               </a>
-              <button onclick="removeStravaData('${dateStr}')" class="strava-remove-btn" title="Supprimer">
+              <button onclick="removeStravaData('${dateStr}')" class="action-btn delete-btn" title="Supprimer">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
                 </svg>
@@ -2399,66 +2612,37 @@
             </div>
           </div>
 
-
-          <!-- Stats principales -->
-          <div class="strava-stats-grid">
-            <div class="stat-card primary">
-              <div class="stat-icon">⏱️</div>
-              <div class="stat-content">
-                <span class="stat-value">${stravaData.time}</span>
-                <span class="stat-label">Temps</span>
-              </div>
+          <!-- Stats en ligne horizontale -->
+          <div class="strava-stats-horizontal">
+            <div class="stat-item">
+              <span class="stat-number">${stravaData.distance}</span>
+              <span class="stat-unit">km</span>
             </div>
-            <div class="stat-card primary">
-              <div class="stat-icon">🏃‍♂️</div>
-              <div class="stat-content">
-                <span class="stat-value">${stravaData.pace}</span>
-                <span class="stat-label">Allure moy.</span>
-              </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">${stravaData.time}</span>
+              <span class="stat-unit">temps</span>
             </div>
-            <div class="stat-card secondary">
-              <div class="stat-icon">💗</div>
-              <div class="stat-content">
-                <span class="stat-value">${stravaData.heartRate || '--'}</span>
-                <span class="stat-label">FC moy.</span>
-              </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">${stravaData.pace}</span>
+              <span class="stat-unit">/km</span>
             </div>
-            <div class="stat-card secondary">
-              <div class="stat-icon">⛰️</div>
-              <div class="stat-content">
-                <span class="stat-value">${elevationGain}m</span>
-                <span class="stat-label">Dénivelé+</span>
+            ${stravaData.heartRate ? `
+              <div class="stat-divider"></div>
+              <div class="stat-item">
+                <span class="stat-number">${stravaData.heartRate}</span>
+                <span class="stat-unit">bpm</span>
               </div>
-            </div>
+            ` : ''}
           </div>
 
-          <!-- Stats additionnelles -->
-          <div class="strava-extra-stats">
-            <div class="extra-stat">
-              <span class="extra-value">👍 ${kudos}</span>
-              <span class="extra-label">Kudos</span>
-            </div>
-            <div class="extra-stat">
-              <span class="extra-value">🏁 ${segments}</span>
-              <span class="extra-label">Segments</span>
-            </div>
-            <div class="extra-stat">
-              <span class="extra-value">🔥 ${Math.floor(parseFloat(stravaData.distance) * 65)}</span>
-              <span class="extra-label">Calories</span>
-            </div>
-          </div>
-
-          <!-- Comparaisons avec objectif -->
-          ${stravaData.comparison ? `
-            <div class="strava-comparison-enhanced">
-              <div class="comparison-title">📊 Comparaison avec l'objectif</div>
-              <div class="comparison-items">
-                ${stravaData.comparison.map(comp => `
-                  <span class="comparison-item ${comp.type}">
-                    ${comp.type === 'positive' ? '✅' : comp.type === 'negative' ? '🚀' : '➡️'} ${comp.text}
-                  </span>
-                `).join('')}
-              </div>
+          <!-- Comparaisons si présentes -->
+          ${stravaData.comparison && stravaData.comparison.length > 0 ? `
+            <div class="strava-comparison-mini">
+              ${stravaData.comparison.map(comp => `
+                <span class="comp-badge ${comp.type}">${comp.text}</span>
+              `).join('')}
             </div>
           ` : ''}
         </div>
@@ -3411,7 +3595,7 @@
         }
         
         // Add/remove body padding for mobile bottom nav
-        document.body.style.paddingBottom = isMobile ? '80px' : '0';
+        document.body.style.paddingBottom = isMobile ? '85px' : '0';
       };
       
       updateMobileInterface();
