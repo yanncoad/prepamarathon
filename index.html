@@ -2637,14 +2637,6 @@
             ` : ''}
           </div>
 
-          <!-- Comparaisons si présentes -->
-          ${stravaData.comparison && stravaData.comparison.length > 0 ? `
-            <div class="strava-comparison-mini">
-              ${stravaData.comparison.map(comp => `
-                <span class="comp-badge ${comp.type}">${comp.text}</span>
-              `).join('')}
-            </div>
-          ` : ''}
         </div>
       `;
     }
