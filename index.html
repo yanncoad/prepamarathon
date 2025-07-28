@@ -393,8 +393,17 @@
     }
 
     .custom-checkbox.checked {
-      background: var(--primary);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       border-color: var(--primary);
+      transform: scale(1);
+      box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+      animation: checkbox-success 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes checkbox-success {
+      0% { transform: scale(0.8); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
     .custom-checkbox.checked::after {
@@ -416,8 +425,11 @@
     }
 
     .checkbox-label.checked {
-      color: var(--text-secondary);
+      color: var(--primary);
       text-decoration: line-through;
+      text-decoration-color: var(--primary);
+      opacity: 0.8;
+      transition: all 0.3s ease;
     }
 
     /* Boutons */
@@ -1087,6 +1099,80 @@
       animation: fadeIn 0.3s ease;
     }
 
+    /* Animation confetti */
+    .confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+      overflow: hidden;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      animation: confetti-fall 3s linear forwards;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Animation discrète pour les coches */
+    .checkbox-ripple {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .checkbox-ripple::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 107, 53, 0.3);
+      transform: translate(-50%, -50%);
+      animation: ripple-effect 0.6s ease-out;
+    }
+
+    @keyframes ripple-effect {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+      }
+      100% {
+        width: 40px;       
+        height: 40px;
+        opacity: 0;
+      }
+    }
+
+    /* Animation pour tâche cochée */
+    .task-completed-animation {
+      animation: task-check 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes task-check {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
     /* Mobile-specific animations */
     @keyframes slideInUp {
       from {
@@ -1699,27 +1785,12 @@
       color: #60a5fa;
     }
 
-    .import-strava-btn {
-      width: 100%;
-      padding: var(--spacing-sm);
-      background: linear-gradient(135deg, #fc4c02, #ff6b35);
-      color: white;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-weight: 500;
-      cursor: pointer;
-      margin-top: var(--spacing-md);
-      transition: all 0.2s ease;
-      font-size: 0.875rem;
-    }
 
-    .import-strava-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(252, 76, 2, 0.3);
-    }
 
-    .import-strava-btn:active {
-      transform: scale(0.98);
+    .strava-icon-btn {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
     }
 
     /* Types de séances */
@@ -1745,6 +1816,26 @@
 
     .session-card.festival::before {
       background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+
+    /* Amélioration des séances complétées */
+    .session-card[data-status="completed"] {
+      border-left: 4px solid var(--success);
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(16, 185, 129, 0.02) 100%);
+    }
+
+    .session-card[data-status="completed"]::before {
+      background: linear-gradient(90deg, var(--success), #34d399);
+    }
+
+    .session-card[data-status="completed"] .progress-fill {
+      background: linear-gradient(90deg, var(--success), #34d399);
+    }
+
+    .session-card[data-status="completed"] .progress-number {
+      color: var(--success);
+      font-weight: 700;
     }
 
     /* Icônes de type */
@@ -2080,6 +2171,35 @@
               <div>• Olives: 10 unités</div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Sélecteur de Date Strava -->
+  <div id="stravaDateModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Importer depuis une autre date</h2>
+        <button class="modal-close" id="closeStravaDateModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom: var(--spacing-lg);">
+          <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: var(--spacing-md);">
+            Sélectionnez une date pour rechercher des activités Strava à importer dans cette séance.
+          </p>
+          <label for="stravaDatePicker" style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--spacing-xs); display: block;">Date de l'activité à importer :</label>
+          <input type="date" id="stravaDatePicker" class="weight-input" style="width: 100%; margin-bottom: var(--spacing-md);">
+        </div>
+        
+        <div style="display: flex; gap: var(--spacing-md); justify-content: flex-end;">
+          <button class="btn btn-secondary" onclick="closeStravaDateModal()">Annuler</button>
+          <button class="btn btn-primary" onclick="searchStravaFromDate()">Rechercher</button>
+        </div>
+        
+        <div id="stravaSearchResults" style="margin-top: var(--spacing-lg); display: none;">
+          <h3 style="font-size: 1rem; margin-bottom: var(--spacing-md); color: var(--text-primary);">Activités trouvées :</h3>
+          <div id="stravaActivitiesList"></div>
         </div>
       </div>
     </div>
@@ -2427,8 +2547,23 @@
         <!-- Vignette Strava si importée -->
         ${data.stravaData ? createStravaVignette(data.stravaData, dateStr) : ''}
         
-        <!-- Bouton d'import Strava si pas encore fait -->
-        ${!data.stravaData && (plan.type !== 'rest') ? `<button class="import-strava-btn" onclick="importFromStrava('${dateStr}')">📈 Importer depuis Strava</button>` : ''}
+        <!-- Boutons Strava juste en dessous de la vignette -->
+        ${!data.stravaData && (plan.type !== 'rest') ? `
+          <div style="display: flex; gap: var(--spacing-sm); margin-bottom: var(--spacing-md); flex-wrap: wrap;">
+            <button class="btn btn-primary" onclick="importFromStrava('${dateStr}')" title="Importer depuis Strava">
+              <svg class="strava-icon-btn" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.172"/>
+              </svg>
+              Importer Strava
+            </button>
+            <button class="btn btn-secondary" onclick="openStravaDateSelector('${dateStr}')" title="Importer depuis une autre date">
+              <svg class="strava-icon-btn" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.172"/>
+              </svg>
+              Autre date
+            </button>
+          </div>
+        ` : ''}
 
         <div class="card-actions">
           <div class="weight-section">
@@ -2788,10 +2923,21 @@
       
       saveData(dateStr, data);
       
+      // Vérifier si la séance est maintenant complète
+      const isComplete = isCompleteDay(data, plan);
+      
       // Recharger la page pour afficher les changements
       setTimeout(() => {
         init();
         showSuccessToast('Séance importée depuis Strava !');
+        
+        // Déclencher confetti si la séance est complète
+        if (isComplete) {
+          setTimeout(() => {
+            triggerConfetti();
+            triggerHapticFeedback('medium');
+          }, 500);
+        }
       }, 300);
     }
 
@@ -2963,19 +3109,247 @@
       await importActivity(dateStr, activity);
     }
 
+    // Variables globales pour le sélecteur de date
+    let currentTargetDate = null;
+    let foundActivitiesFromDate = [];
+
+    // Ouvrir le modal de sélection de date
+    function openStravaDateSelector(targetDateStr) {
+      currentTargetDate = targetDateStr;
+      document.getElementById('stravaDateModal').classList.remove('hidden');
+      
+      // Mettre la date d'aujourd'hui par défaut
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('stravaDatePicker').value = today;
+      
+      // Cacher les résultats précédents
+      document.getElementById('stravaSearchResults').style.display = 'none';
+    }
+
+    // Fermer le modal de sélection de date
+    function closeStravaDateModal() {
+      document.getElementById('stravaDateModal').classList.add('hidden');
+      currentTargetDate = null;
+      foundActivitiesFromDate = [];
+      document.getElementById('stravaSearchResults').style.display = 'none';
+    }
+
+    // Rechercher des activités Strava depuis une date spécifique
+    async function searchStravaFromDate() {
+      const selectedDate = document.getElementById('stravaDatePicker').value;
+      if (!selectedDate) {
+        alert('Veuillez sélectionner une date');
+        return;
+      }
+
+      const accessToken = getStravaAccessToken();
+      if (!accessToken) {
+        alert('Vous devez d\'abord vous connecter à Strava');
+        authenticateWithStrava();
+        return;
+      }
+
+      try {
+        // Rechercher dans une plage étendue autour de la date sélectionnée
+        const activities = await getStravaActivitiesForDateRange(selectedDate, accessToken);
+        
+        if (activities.length === 0) {
+          alert('Aucune activité trouvée pour cette date et les jours autour');
+          return;
+        }
+
+        foundActivitiesFromDate = activities;
+        displayFoundActivities(activities);
+        
+      } catch (error) {
+        console.error('Erreur lors de la recherche d\'activités:', error);
+        alert('Erreur lors de la recherche d\'activités Strava');
+      }
+    }
+
+    // Récupérer les activités Strava sur une plage de dates étendue (± 2 jours)
+    async function getStravaActivitiesForDateRange(dateStr, accessToken) {
+      try {
+        const targetDate = new Date(dateStr);
+        
+        // Plage de ± 2 jours autour de la date sélectionnée
+        const startDate = new Date(targetDate);
+        startDate.setDate(startDate.getDate() - 2);
+        startDate.setHours(0, 0, 0, 0);
+        
+        const endDate = new Date(targetDate);
+        endDate.setDate(endDate.getDate() + 2);
+        endDate.setHours(23, 59, 59, 999);
+        
+        const after = Math.floor(startDate.getTime() / 1000);
+        const before = Math.floor(endDate.getTime() / 1000);
+        
+        const response = await fetch(`https://www.strava.com/api/v3/athlete/activities?after=${after}&before=${before}`, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Erreur API Strava: ${response.status}`);
+        }
+
+        const activities = await response.json();
+        
+        // Filtrer seulement les activités de course et trier par date (plus récent en premier)
+        return activities
+          .filter(activity => 
+            activity.type === 'Run' || 
+            activity.type === 'TrailRun' || 
+            activity.type === 'Treadmill'
+          )
+          .sort((a, b) => new Date(b.start_date) - new Date(a.start_date));
+        
+      } catch (error) {
+        console.error('Erreur lors de la récupération des activités par plage:', error);
+        throw error;
+      }
+    }
+
+    // Afficher les activités trouvées
+    function displayFoundActivities(activities) {
+      const resultsDiv = document.getElementById('stravaSearchResults');
+      const activitiesList = document.getElementById('stravaActivitiesList');
+      
+      activitiesList.innerHTML = activities.map((activity, index) => {
+        const activityDate = new Date(activity.start_date);
+        const formattedDate = activityDate.toLocaleDateString('fr-FR', { 
+          weekday: 'short', 
+          day: 'numeric', 
+          month: 'short' 
+        });
+        
+        return `
+          <div class="strava-activity-option" onclick="importActivityFromDate(${index})" 
+               style="cursor: pointer; padding: var(--spacing-md); border: 1px solid var(--border); 
+                      border-radius: var(--radius-md); transition: all 0.2s ease; margin-bottom: var(--spacing-sm);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-xs);">
+              <div style="font-weight: 600; color: var(--text-primary);">${activity.name}</div>
+              <div style="font-size: 0.75rem; color: var(--text-secondary); background: var(--surface-variant); 
+                          padding: 2px 6px; border-radius: 4px;">${formattedDate}</div>
+            </div>
+            <div style="color: var(--text-secondary); font-size: 0.875rem;">
+              ${(activity.distance / 1000).toFixed(1)}km • ${formatTime(activity.moving_time)} • ${calculatePace(activity)}/km
+              ${activity.average_heartrate ? ` • ${Math.round(activity.average_heartrate)} bpm` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      resultsDiv.style.display = 'block';
+    }
+
+    // Importer une activité sélectionnée depuis une autre date
+    async function importActivityFromDate(activityIndex) {
+      if (!currentTargetDate || !foundActivitiesFromDate[activityIndex]) {
+        alert('Erreur lors de la sélection de l\'activité');
+        return;
+      }
+
+      const selectedActivity = foundActivitiesFromDate[activityIndex];
+      const activityDate = new Date(selectedActivity.start_date).toLocaleDateString('fr-FR');
+      
+      if (confirm(`Êtes-vous sûr de vouloir importer l'activité "${selectedActivity.name}" du ${activityDate} dans cette séance ?`)) {
+        await importActivity(currentTargetDate, selectedActivity);
+        closeStravaDateModal();
+      }
+    }
+
     // Toast de succès
     function showSuccessToast(message) {
       // Simple alert pour le moment, tu peux améliorer avec un toast custom
       setTimeout(() => alert(message), 100);
     }
 
+    // Animation confetti pour célébrer les séances terminées
+    function triggerConfetti() {
+      const confettiContainer = document.createElement('div');
+      confettiContainer.className = 'confetti-container';
+      document.body.appendChild(confettiContainer);
+
+      const colors = ['#ff6b35', '#10b981', '#6366f1', '#f59e0b', '#ef4444'];
+      
+      // Créer 50 morceaux de confetti
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti-piece';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        
+        // Formes variées
+        if (Math.random() > 0.5) {
+          confetti.style.borderRadius = '50%';
+        }
+        
+        confettiContainer.appendChild(confetti);
+      }
+
+      // Nettoyer après l'animation
+      setTimeout(() => {
+        if (confettiContainer.parentNode) {
+          confettiContainer.parentNode.removeChild(confettiContainer);
+        }
+      }, 4000);
+    }
+
+    // Animation discrète pour les coches
+    function triggerCheckboxRipple(element) {
+      element.classList.add('checkbox-ripple');
+      
+      setTimeout(() => {
+        element.classList.remove('checkbox-ripple');
+      }, 600);
+    }
+
+    // Animation pour les tâches terminées
+    function triggerTaskAnimation(element) {
+      element.classList.add('task-completed-animation');
+      
+      setTimeout(() => {
+        element.classList.remove('task-completed-animation');
+      }, 400);
+    }
+
     // Event handlers
     function toggleCheckbox(dateStr, key) {
       triggerHapticFeedback('light');
       const data = loadData(dateStr);
+      const wasChecked = data[key];
       data[key] = !data[key];
       saveData(dateStr, data);
-      updateCardAfterChange(dateStr);
+      
+      // Déclencher les animations
+      const card = document.querySelector(`[data-date="${dateStr}"]`);
+      if (card) {
+        const checkbox = event.target.closest('.custom-checkbox');
+        if (checkbox && data[key]) {
+          // Animation de la coche
+          triggerCheckboxRipple(checkbox);
+        }
+        
+        // Vérifier si la séance est maintenant complète
+        const plan = window.dayPlans[dateStr] || {};
+        const oldData = {...data};
+        oldData[key] = wasChecked; // État précédent
+        const wasComplete = isCompleteDay(oldData, plan);
+        updateCardAfterChange(dateStr);
+        const isNowComplete = isCompleteDay(data, plan);
+        
+        // Si la séance vient d'être complétée, déclencher les confetti
+        if (!wasComplete && isNowComplete) {
+          setTimeout(() => {
+            triggerConfetti();
+            triggerHapticFeedback('medium');
+          }, 300);
+        }
+      }
     }
 
     function updateWeight(dateStr, value) {
@@ -3575,6 +3949,17 @@
       document.getElementById('timerModal').addEventListener('click', (e) => {
         if (e.target.id === 'timerModal') {
           document.getElementById('timerModal').classList.add('hidden');
+        }
+      });
+      
+      // Modal Strava Date Selector events
+      document.getElementById('closeStravaDateModal').addEventListener('click', () => {
+        document.getElementById('stravaDateModal').classList.add('hidden');
+      });
+      
+      document.getElementById('stravaDateModal').addEventListener('click', (e) => {
+        if (e.target.id === 'stravaDateModal') {
+          document.getElementById('stravaDateModal').classList.add('hidden');
         }
       });
       
