@@ -306,6 +306,39 @@
       background: linear-gradient(90deg, var(--primary), var(--primary-light));
     }
 
+    /* Bordures colorées par type de séance */
+    .session-card.recovery::before {
+      background: linear-gradient(90deg, #6366f1, #818cf8);
+    }
+
+    .session-card.vma::before {
+      background: linear-gradient(90deg, #ef4444, #f87171);
+    }
+
+    .session-card.festival::before {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+
+    .session-card.rest::before {
+      background: linear-gradient(90deg, #10b981, #34d399);
+    }
+
+    .session-card.tempo::before {
+      background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+    }
+
+    .session-card.semi::before {
+      background: linear-gradient(90deg, #06b6d4, #67e8f9);
+    }
+
+    .session-card.marathon::before {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+
+    .session-card.endurance::before {
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    }
+
     .card-header {
       display: flex;
       justify-content: space-between;
@@ -1793,30 +1826,6 @@
       fill: currentColor;
     }
 
-    /* Types de séances */
-    .session-card.endurance::before {
-      background: linear-gradient(90deg, #ff6b35, #ff8a65);
-    }
-
-    .session-card.recovery::before {
-      background: linear-gradient(90deg, #6366f1, #818cf8);
-    }
-
-    .session-card.vma::before {
-      background: linear-gradient(90deg, #ef4444, #f87171);
-    }
-
-    .session-card.rest::before {
-      background: linear-gradient(90deg, #10b981, #34d399);
-    }
-
-    .session-card.tempo::before {
-      background: linear-gradient(90deg, #8b5cf6, #a78bfa);
-    }
-
-    .session-card.festival::before {
-      background: linear-gradient(90deg, #f59e0b, #fbbf24);
-    }
 
     /* Amélioration des séances complétées */
     .session-card[data-status="completed"] {
@@ -1849,30 +1858,40 @@
       color: white;
       font-size: 1.2rem;
       margin-right: var(--spacing-md);
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     }
 
-    .type-icon.endurance {
-      background: linear-gradient(135deg, #ff6b35, #ff8a65);
-    }
-
+    /* Couleurs spécifiques par type de séance */
     .type-icon.recovery {
-      background: linear-gradient(135deg, #6366f1, #818cf8);
+      background: linear-gradient(135deg, #6366f1, #818cf8); /* Bleu zen pour récupération */
     }
 
     .type-icon.vma {
-      background: linear-gradient(135deg, #ef4444, #f87171);
-    }
-
-    .type-icon.rest {
-      background: linear-gradient(135deg, #10b981, #34d399);
-    }
-
-    .type-icon.tempo {
-      background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+      background: linear-gradient(135deg, #ef4444, #f87171); /* Rouge énergique pour VMA */
     }
 
     .type-icon.festival {
-      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      background: linear-gradient(135deg, #f59e0b, #fbbf24); /* Orange/jaune festif */
+    }
+
+    .type-icon.rest {
+      background: linear-gradient(135deg, #10b981, #34d399); /* Vert apaisant pour repos */
+    }
+
+    .type-icon.tempo {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa); /* Violet pour tempo */
+    }
+
+    .type-icon.semi {
+      background: linear-gradient(135deg, #06b6d4, #67e8f9); /* Cyan pour semi */
+    }
+
+    .type-icon.marathon {
+      background: linear-gradient(135deg, #f59e0b, #fbbf24); /* Doré pour marathon */
+    }
+
+    .type-icon.endurance {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark)); /* Orange par défaut */
     }
 
     /* Détails de séance */
@@ -1938,14 +1957,7 @@
 
     .weight-diff {
       margin-bottom: 2px;
-    }
-
-    .weight-diff.positive {
-      color: var(--error);
-    }
-
-    .weight-diff.negative {
-      color: var(--success);
+      color: var(--text-secondary);
     }
 
     /* Toggle pour détails */
@@ -1986,9 +1998,6 @@
       transition: transform 0.2s ease;
     }
 
-    .toggle-arrow.open {
-      transform: rotate(180deg);
-    }
 
 
   </style>
@@ -2451,14 +2460,69 @@
     }
 
     function getTypeIcon(type) {
-      switch(type) {
-        case 'recovery': return '🔄';
-        case 'vma': return '⚡';
-        case 'festival': return '🎵';
-        case 'rest': return '😴';
-        case 'tempo': return '🎯';
-        default: return '🏃';
-      }
+      const iconMap = {
+        'recovery': `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px;">
+          <g>
+            <!-- Barre principale de l'haltère -->
+            <rect x="3" y="11" width="18" height="2" rx="1"/>
+            
+            <!-- Poids gauche -->
+            <rect x="2" y="8" width="4" height="8" rx="1"/>
+            <rect x="1.5" y="9" width="5" height="6" rx="0.5"/>
+            
+            <!-- Poids droit -->
+            <rect x="18" y="8" width="4" height="8" rx="1"/>
+            <rect x="17.5" y="9" width="5" height="6" rx="0.5"/>
+            
+            <!-- Grip central -->
+            <rect x="8" y="10.5" width="8" height="3" rx="1.5" fill="none" stroke="currentColor" stroke-width="0.5"/>
+            <line x1="10" y1="10.5" x2="10" y2="13.5" stroke="currentColor" stroke-width="0.3"/>
+            <line x1="12" y1="10.5" x2="12" y2="13.5" stroke="currentColor" stroke-width="0.3"/>
+            <line x1="14" y1="10.5" x2="14" y2="13.5" stroke="currentColor" stroke-width="0.3"/>
+          </g>
+        </svg>`,
+        
+        'vma': `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px;">
+          <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>
+          <path d="M18 7l2 2-2 2-2-2 2-2z"/>
+          <path d="M20 5l2 2-2 2-2-2 2-2z"/>
+        </svg>`,
+        
+        'festival': `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px;">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>`,
+        
+        'rest': `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px;">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          <circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1"/>
+        </svg>`,
+        
+        'tempo': `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px;">
+          <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>
+          <circle cx="12" cy="12" r="2"/>
+          <path d="M12 8V4M16 12h4M12 16v4M8 12H4"/>
+        </svg>`,
+        
+        'semi': `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px;">
+          <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>
+          <path d="M18 4h2v2h-2zM16 6h2v2h-2zM14 8h2v2h-2z"/>
+        </svg>`,
+        
+        'marathon': `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px;">
+          <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>
+          <path d="M18 2h4v4h-4z"/>
+          <path d="M19 3h2v2h-2z"/>
+        </svg>`,
+        
+        'endurance': `<svg viewBox="0 0 24 24" fill="currentColor" style="width: 22px; height: 22px;">
+          <path d="M13.49 5.48c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3c1.3 1.5 3.3 2.5 5.5 2.5v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1l-5.2 2.2v4.7h2v-3.4l1.8-.7-1.6 8.1-4.9-1-.4 2 7 1.4z"/>
+          <circle cx="18" cy="6" r="1.5"/>
+          <circle cx="20" cy="8" r="1"/>
+          <circle cx="16" cy="8" r="1"/>
+        </svg>`
+      };
+      
+      return iconMap[type] || iconMap['endurance'];
     }
 
     function createCard(date) {
@@ -2495,7 +2559,7 @@
         </div>
 
         <div class="progress-bar">
-          <div class="progress-fill" style="width: ${completionPercent}%;"></div>
+          <div class="progress-fill" style="width: ${completionPercent}%"></div>
         </div>
 
         ${plan.seance ? `
@@ -2855,21 +2919,6 @@
       }
     }
 
-    // Génération d'une activité simulée pour les tests
-    function generateSimulatedActivity(dateStr) {
-      const plan = window.dayPlans[dateStr];
-      const baseDistance = 8 + Math.random() * 4; // 8-12km
-      const baseTime = (baseDistance * 5.5 + Math.random() * 60) * 60; // ~5:30/km ± variation
-      
-      return {
-        id: Math.floor(Math.random() * 1000000),
-        name: `${plan?.titre?.includes('HIIT') ? 'Séance HIIT' : 'Course à pied'}`,
-        distance: baseDistance * 1000, // en mètres
-        moving_time: Math.floor(baseTime),
-        average_heartrate: Math.floor(140 + Math.random() * 20),
-        calories: Math.floor(baseDistance * 65)
-      };
-    }
 
     // Supprimer les données Strava d'une séance
     function removeStravaData(dateStr) {
@@ -2989,9 +3038,6 @@
       return localStorage.getItem('strava_access_token');
     }
 
-    function getStravaRefreshToken() {
-      return localStorage.getItem('strava_refresh_token');
-    }
 
     // Échanger le code d'autorisation contre un token d'accès
     async function exchangeCodeForToken(code) {
@@ -3119,8 +3165,7 @@
       document.getElementById('stravaDateModal').classList.remove('hidden');
       
       // Mettre la date d'aujourd'hui par défaut
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('stravaDatePicker').value = today;
+      document.getElementById('stravaDatePicker').value = new Date().toISOString().split('T')[0];
       
       // Cacher les résultats précédents
       document.getElementById('stravaSearchResults').style.display = 'none';
@@ -3308,14 +3353,6 @@
       }, 600);
     }
 
-    // Animation pour les tâches terminées
-    function triggerTaskAnimation(element) {
-      element.classList.add('task-completed-animation');
-      
-      setTimeout(() => {
-        element.classList.remove('task-completed-animation');
-      }, 400);
-    }
 
     // Event handlers
     function toggleCheckbox(dateStr, key) {
@@ -3604,10 +3641,10 @@
       }
       
       // Update round and exercise counters
-      if (currentRound) currentRound.textContent = timerState.currentRound;
-      if (totalRounds) totalRounds.textContent = currentHiitSession ? currentHiitSession.rounds : 4;
-      if (currentExerciseNum) currentExerciseNum.textContent = timerState.currentExercise + 1;
-      if (totalExercises) totalExercises.textContent = currentHiitSession ? currentHiitSession.exercises.length : 4;
+      if (currentRound) currentRound.textContent = timerState.currentRound.toString();
+      if (totalRounds) totalRounds.textContent = currentHiitSession ? currentHiitSession.rounds.toString() : '4';
+      if (currentExerciseNum) currentExerciseNum.textContent = (timerState.currentExercise + 1).toString();
+      if (totalExercises) totalExercises.textContent = currentHiitSession ? currentHiitSession.exercises.length.toString() : '4';
       
       // Update progress bar
       let progress = 0;
@@ -3770,11 +3807,11 @@
         if (el) el.textContent = value;
       };
       
-      updateStat('daysRemaining', daysRemaining);
-      updateStat('completedSessions', completedCount);
+      updateStat('daysRemaining', daysRemaining.toString());
+      updateStat('completedSessions', completedCount.toString());
       updateStat('progressPercentage', progressPercentage + '%');
-      updateStat('daysRemainingMobile', daysRemaining);
-      updateStat('completedSessionsMobile', completedCount);
+      updateStat('daysRemainingMobile', daysRemaining.toString());
+      updateStat('completedSessionsMobile', completedCount.toString());
       updateStat('progressPercentageMobile', progressPercentage + '%');
     }
 
