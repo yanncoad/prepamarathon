@@ -308,7 +308,19 @@
 
     /* Bordures colorées par type de séance */
     .session-card.recovery::before {
-      background: linear-gradient(90deg, #6366f1, #818cf8);
+      background: linear-gradient(90deg, #06b6d4, #67e8f9);
+    }
+
+    .session-card.pre-semi::before {
+      background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    }
+
+    .session-card.post-semi::before {
+      background: linear-gradient(90deg, #10b981, #34d399);
+    }
+
+    .session-card.hiit::before {
+      background: linear-gradient(90deg, #8b5cf6, #a78bfa);
     }
 
     .session-card.vma::before {
@@ -1890,6 +1902,22 @@
       background: linear-gradient(135deg, #f59e0b, #fbbf24); /* Doré pour marathon */
     }
 
+    .type-icon.pre-semi {
+      background: linear-gradient(135deg, #f59e0b, #fbbf24); /* Jaune pour avant semi */
+    }
+
+    .type-icon.post-semi {
+      background: linear-gradient(135deg, #10b981, #34d399); /* Vert pour après semi */
+    }
+
+    .type-icon.hiit {
+      background: linear-gradient(135deg, #8b5cf6, #a78bfa); /* Violet pour HIIT */
+    }
+
+    .type-icon.recovery {
+      background: linear-gradient(135deg, #06b6d4, #67e8f9); /* Bleu pour récupération */
+    }
+
     .type-icon.endurance {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark)); /* Orange par défaut */
     }
@@ -2086,7 +2114,7 @@
 
 
   <!-- Contenu principal -->
-  <main class="container">
+  <main class="container" style="margin-top: var(--spacing-xl);">
     <div id="grid"></div>
   </main>
 
@@ -2395,11 +2423,26 @@
             objectif: session.sections.find(s => s.title === "Objectif")?.content || "",
             resume: session.sections.find(s => s.title === "Résumé de la séance")?.content || session.sections.find(s => s.title === "Résumé")?.content || "",
             detailSeance: session.sections.find(s => s.title === "Détail")?.content || session.sections.find(s => s.title === "Détail de la séance")?.content || "",
+            nutrition: session.sections.find(s => s.title === "Nutrition")?.content || "",
             conseil: session.sections.find(s => s.title === "Conseil")?.content || session.sections.find(s => s.title === "Conseil pour la séance")?.content || session.sections.find(s => s.title === "Conseils")?.content || "",
             pourquoi: session.sections.find(s => s.title === "Pourquoi cette séance ?")?.content || "",
-            type: session.title.includes("REPOS") || session.title.includes("Repos") ? "rest" : 
-                  session.title.includes("HIIT") || session.title.includes("Récupération") ? "recovery" :
-                  session.semi ? "semi" : session.mar ? "marathon" : "endurance",
+            type: (() => {
+              if (session.title.includes("REPOS") || session.title.includes("Repos")) return "rest";
+              if (session.title.includes("HIIT Complet Intense")) return "hiit";
+              if (session.title.includes("HIIT") || session.title.includes("Récupération")) return "recovery";
+              
+              // Pour les séances spécifiques (semi ET mar = true)
+              if (session.semi && session.mar) {
+                const semiDate = new Date("2025-09-14");
+                const marathonDate = new Date("2025-10-26");
+                const sessionDate = new Date(session.date);
+                
+                if (sessionDate < semiDate) return "pre-semi";
+                if (sessionDate >= semiDate && sessionDate < marathonDate) return "post-semi";
+              }
+              
+              return session.semi ? "semi" : session.mar ? "marathon" : "endurance";
+            })(),
             nutritionMatin: "1 des 3 petits déjeuners au choix",
             nutritionMidi: "1 protéine + 1 glucide + légumes (300g) + 1 lipide",
             nutritionSoir: "1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)"
@@ -2577,6 +2620,12 @@
               <div class="detail-title">Objectif</div>
               <div class="detail-content">${plan.objectif}</div>
             </div>
+            ${plan.nutrition ? `
+            <div class="detail-section">
+              <div class="detail-title">🍽️ Nutrition du jour</div>
+              <div class="detail-content" style="white-space: pre-line;">${plan.nutrition}</div>
+            </div>
+            ` : ''}
             <div class="detail-section">
               <div class="detail-title">Détail de la séance</div>
               <div class="detail-content" style="white-space: pre-line;">${plan.detailSeance}</div>
@@ -2612,7 +2661,7 @@
         ${data.stravaData ? createStravaVignette(data.stravaData, dateStr) : ''}
         
         <!-- Boutons Strava juste en dessous de la vignette -->
-        ${!data.stravaData && (plan.type !== 'rest') ? `
+        ${!data.stravaData && (plan.type !== 'rest' && plan.type !== 'hiit') ? `
           <div style="display: flex; gap: var(--spacing-sm); margin-bottom: var(--spacing-md); flex-wrap: wrap;">
             <button class="btn btn-primary" onclick="importFromStrava('${dateStr}')" title="Importer depuis Strava">
               <svg class="strava-icon-btn" viewBox="0 0 24 24" fill="currentColor">
@@ -2637,7 +2686,7 @@
           </div>
           <div class="action-buttons">
             <button class="btn btn-secondary" onclick="openNutritionModal()">Guide nutrition</button>
-            ${plan.type === 'recovery' ? `<button class="btn btn-primary" onclick="openTimerModal('${dateStr}')">⏱️ Timer HIIT</button>` : ''}
+            ${(plan.type === 'recovery' || plan.type === 'hiit') ? `<button class="btn btn-primary" onclick="openTimerModal('${dateStr}')">⏱️ Timer HIIT</button>` : ''}
           </div>
         </div>
       `;
@@ -2653,6 +2702,8 @@
         // Pas de sport pour les jours de repos
       } else if (plan.type === 'recovery') {
         html += createCheckbox('Course récupération', data.sportRun, 'sportRun', dateStr);
+        html += createCheckbox('HIIT', data.sportHiit, 'sportHiit', dateStr);
+      } else if (plan.type === 'hiit') {
         html += createCheckbox('HIIT', data.sportHiit, 'sportHiit', dateStr);
       } else if (plan.type === 'festival') {
         html += createCheckbox('Journée festival profitée !', data.sport, 'sport', dateStr);
@@ -3208,7 +3259,21 @@
         
       } catch (error) {
         console.error('Erreur lors de la recherche d\'activités:', error);
-        alert('Erreur lors de la recherche d\'activités Strava');
+        
+        // Si c'est une erreur d'authentification, proposer de se reconnecter
+        if (error.message.includes('401') || error.message.includes('Unauthorized')) {
+          if (confirm('Votre session Strava a expiré. Voulez-vous vous reconnecter ?')) {
+            // Nettoyer les tokens expirés
+            localStorage.removeItem('strava_access_token');
+            localStorage.removeItem('strava_refresh_token');
+            localStorage.removeItem('strava_token_expires_at');
+            
+            // Relancer l'authentification
+            authenticateWithStrava();
+          }
+        } else {
+          alert('Erreur lors de la recherche d\'activités Strava: ' + error.message);
+        }
       }
     }
 
@@ -3236,7 +3301,15 @@
         });
 
         if (!response.ok) {
-          throw new Error(`Erreur API Strava: ${response.status}`);
+          if (response.status === 401) {
+            throw new Error(`Erreur d'authentification Strava (401): Token expiré ou invalide`);
+          } else if (response.status === 403) {
+            throw new Error(`Accès refusé Strava (403): Permissions insuffisantes`);
+          } else if (response.status === 429) {
+            throw new Error(`Limite de taux dépassée Strava (429): Trop de requêtes`);
+          } else {
+            throw new Error(`Erreur API Strava: ${response.status} - ${response.statusText}`);
+          }
         }
 
         const activities = await response.json();
