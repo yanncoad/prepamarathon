@@ -558,5 +558,341 @@ const sessions = [
             { title: "Conseil", content: "On réduit l'intensité du HIIT en affûtage ! Plus que 11 jours avant le semi. Récupération très facile, HIIT modéré." },
             { title: "Pourquoi cette séance ?", content: "Récupération active en affûtage + maintien du tonus musculaire sans surcharge." }
         ]
+    },
+    // JEUDI 4 SEPTEMBRE - JOUR 36
+    {
+        date: "2025-09-04",
+        title: "Test Final Semi",
+        semi: true,
+        mar: true,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Dernier test allure semi avant la course" },
+            { title: "Résumé", content: "8km avec 4km à allure semi-marathon" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nÉchauffement : 15min footing facile progressif\nCorps : 2km facile + 4km allure 5'30-5'45/km (allure objectif semi) + 2km facile\nRetour au calme : 5min marche + étirements 10min" },
+            { title: "Conseil", content: "DERNIER TEST ! Les 4km doivent être fluides et naturels. Si ça passe bien, tu es prêt pour dimanche prochain ! Plus que 10 jours !" },
+            { title: "Pourquoi cette séance ?", content: "Test final de validation de l'allure semi, dernière vérification des sensations avant la course." }
+        ]
+    },
+    // VENDREDI 5 SEPTEMBRE - JOUR 37
+    {
+        date: "2025-09-05",
+        title: "Récupération + HIIT Complet Léger",
+        semi: false,
+        mar: false,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Récupération légère - Phase finale affûtage semi" },
+            { title: "Résumé", content: "30min footing récup + 12min HIIT léger" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nFooting récup : 30min allure 7'30-8'00/km très décontracté\nHIIT Complet Léger (12min) :\n3 tours de :\n• Pompes (20s)\n• Wall sit (20s)\n• Planche (20s)\n• Squats (20s)\n• Repos (1min20)" },
+            { title: "Conseil", content: "Récupération très facile ! Plus que 9 jours avant le semi. Les jambes doivent être fraîches. HIIT très modéré." },
+            { title: "Pourquoi cette séance ?", content: "Récupération active en phase finale + maintien très léger du tonus avant la semaine de course." }
+        ]
+    },
+    // SAMEDI 6 SEPTEMBRE - JOUR 38
+    {
+        date: "2025-09-06",
+        title: "Dernière Sortie Pré-Semi",
+        semi: true,
+        mar: true,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Activation douce avant semaine de course semi" },
+            { title: "Résumé", content: "8km facile avec 3 accélérations courtes" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix (1h avant la sortie)\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nÉchauffement : 10min progression très douce\nCorps : 5km allure 6'30-6'45/km + 3 x 200m allure 5'30/km (récup 200m marche) + 2km retour au calme\nRetour au calme : 5min marche + étirements 15min" },
+            { title: "Conseil", content: "Dernière sortie ! Les 200m sont juste pour activer, pas pour forcer. Plus que 8 jours avant le semi ! Tu dois te sentir léger." },
+            { title: "Pourquoi cette séance ?", content: "Dernière activation avant la semaine de course, maintien des sensations sans fatigue." }
+        ]
+    },
+    // DIMANCHE 7 SEPTEMBRE - JOUR 39 (HIIT LÉGER)
+    {
+        date: "2025-09-07",
+        title: "HIIT Complet Léger",
+        semi: false,
+        mar: false,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Renforcement léger + activation métabolique modérée" },
+            { title: "Résumé", content: "12min HIIT corps entier léger" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nHIIT Complet Léger (12min) :\n3 tours de :\n• Pompes (20s)\n• Squats (20s)\n• Planche (20s)\n• Mountain climbers (20s)\n• Repos (1min20)" },
+            { title: "Conseil", content: "HIIT léger avant la semaine du semi ! Plus que 7 jours ! On réduit l'intensité pour arriver frais à Auray-Vannes." },
+            { title: "Pourquoi cette séance ?", content: "Activation métabolique modérée, renforcement léger avant la semaine cruciale du semi." }
+        ]
+    },
+    // LUNDI 8 SEPTEMBRE - JOUR 40 (SEMAINE DU SEMI !)
+    {
+        date: "2025-09-08",
+        title: "Endurance Fondamentale Ultra-Légère",
+        semi: true,
+        mar: true,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Affûtage ultra-final - Semaine de course semi" },
+            { title: "Résumé", content: "8km facile" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nÉchauffement : 10min progression très douce\nCorps : 8km allure 6'45-7'00/km (ultra-décontracté)\nRetour au calme : 5min marche + étirements 10min" },
+            { title: "Conseil", content: "SEMAINE DU SEMI ! Tout ultra-léger maintenant. Plus que 6 jours ! Les jambes doivent être des ressorts prêts à exploser dimanche." },
+            { title: "Pourquoi cette séance ?", content: "Affûtage ultra-final + maintien minimal de la forme en semaine de course semi." }
+        ]
+    },
+    // MARDI 9 SEPTEMBRE - JOUR 41
+    {
+        date: "2025-09-09",
+        title: "Activation Ultra-Légère",
+        semi: true,
+        mar: true,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Activation douce - 5 jours avant le semi" },
+            { title: "Résumé", content: "Footing court + quelques foulées" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nÉchauffement : 10min footing très facile + étirements dynamiques\nCorps : 4 x 50m foulées allure 5'30/km (récupération 1min marche complète)\nRetour au calme : 10min footing très facile + étirements 10min" },
+            { title: "Conseil", content: "Ultra-court ! Les foulées servent juste à maintenir les sensations. Plus que 5 jours ! Les jambes doivent être ultra-fraîches." },
+            { title: "Pourquoi cette séance ?", content: "Activation neuromusculaire minimale, maintien des sensations sans aucune fatigue à J-5." }
+        ]
+    },
+    // MERCREDI 10 SEPTEMBRE - JOUR 42
+    {
+        date: "2025-09-10",
+        title: "Récupération + HIIT Complet MINIMAL",
+        semi: false,
+        mar: false,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Maintien minimal - 4 jours avant le semi" },
+            { title: "Résumé", content: "30min footing récup + 8min HIIT minimal" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nFooting récup : 30min allure 7'30-8'00/km ultra-décontracté\nHIIT Complet MINIMAL (8min) :\n2 tours de :\n• Pompes (15s)\n• Squats (15s)\n• Planche (15s)\n• Repos (2min15)" },
+            { title: "Conseil", content: "MINIMAL ! Plus que 4 jours ! Tout doit être ultra-facile. Les jambes doivent être comme des ressorts prêts à exploser dimanche !" },
+            { title: "Pourquoi cette séance ?", content: "Maintien minimal du tonus à J-4, éviter la rouille sans aucune fatigue." }
+        ]
+    },
+    // JEUDI 11 SEPTEMBRE - JOUR 43
+    {
+        date: "2025-09-11",
+        title: "Dernière Activation Pré-Semi",
+        semi: true,
+        mar: true,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Activation finale - 3 jours avant le semi" },
+            { title: "Résumé", content: "Footing court + dernières foulées" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nÉchauffement : 8min footing très facile + étirements dynamiques\nCorps : 3 x 30m foulées allure 5'30/km (récupération 2min marche complète)\nRetour au calme : 8min footing très facile + étirements 10min" },
+            { title: "Conseil", content: "DERNIÈRE ACTIVATION ! Plus que 3 jours ! Les foulées sont juste pour vérifier que tout va bien. Tu dois te sentir léger et prêt !" },
+            { title: "Pourquoi cette séance ?", content: "Dernière activation neuromusculaire avant le semi, vérification finale des sensations à J-3." }
+        ]
+    },
+    // VENDREDI 12 SEPTEMBRE - JOUR 44
+    {
+        date: "2025-09-12",
+        title: "Récupération + HIIT Complet ULTRA-MINIMAL",
+        semi: false,
+        mar: false,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Maintien ultra-minimal - 2 jours avant le semi" },
+            { title: "Résumé", content: "30min footing récup + 6min HIIT ultra-minimal" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nFooting récup : 30min allure 7'30-8'00/km ultra-décontracté\nHIIT Complet ULTRA-MINIMAL (6min) :\n2 tours de :\n• Pompes (10s)\n• Planche (10s)\n• Repos (2min40)" },
+            { title: "Conseil", content: "ULTRA-MINIMAL ! Plus que 2 jours ! Juste pour éviter la rouille. Les jambes doivent être des ressorts prêts à exploser dimanche !" },
+            { title: "Pourquoi cette séance ?", content: "Maintien ultra-minimal du tonus à J-2, éviter totalement la fatigue avant le jour J." }
+        ]
+    },
+    // SAMEDI 13 SEPTEMBRE - JOUR 45 (VEILLE DE COURSE)
+    {
+        date: "2025-09-13",
+        title: "Repos + Préparation Mentale",
+        semi: true,
+        mar: false,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Repos total - Préparation jour J" },
+            { title: "Résumé", content: "Repos ou marche très légère + préparation matérielle" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + 1 glucide complet (pour faire le plein de glycogène)" },
+            { title: "Détail", content: "PRÉPARATION JOUR J :\nRepos complet ou marche très légère 15min max\nPréparation matérielle : tenue, chaussures, dossard, nutrition course\nHydratation optimale toute la journée\nCoucher tôt (22h max)\nVisualisation positive de la course" },
+            { title: "Conseil", content: "VEILLE DE COURSE ! Repos total, prépare tout ton matériel, hydrate-toi bien, couche-tôt. DEMAIN C'EST LE JOUR J DU SEMI !" },
+            { title: "Pourquoi cette séance ?", content: "Repos total avant le semi d'Auray-Vannes, préparation optimale pour être au top demain." }
+        ]
+    },
+    // DIMANCHE 14 SEPTEMBRE - JOUR 46 🏃‍♂️ JOUR J DU SEMI !
+    {
+        date: "2025-09-14",
+        title: "🎯 SEMI-MARATHON D'AURAY-VANNES 🎯",
+        semi: true,
+        mar: false,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Se faire plaisir + préparation marathon" },
+            { title: "Résumé", content: "JOUR J DU SEMI-MARATHON !" },
+            { title: "Nutrition", content: "MATIN (2-3h avant le départ) : 1 des 3 petits déjeuners au choix + banane + eau\nÉvite : nouveautés, fibres, trop de liquide\n1h avant le départ : Petite collation si besoin (banane, barre énergétique)\nHydratation légère" },
+            { title: "Détail", content: "PROGRAMME JOUR J :\n2-3h avant : Réveil, petit-déjeuner, préparation tranquille\n1h avant : Arrivée sur site, retrait dossard si besoin, échauffement\n30min avant :\n• Échauffement : 10-15min footing très facile\n• Activation : 3-4 accélérations de 30m\n• Étirements dynamiques : 5min\n\nPENDANT LA COURSE :\n• Km 1-5 : Départ tranquille, trouve ton rythme\n• Km 6-15 : Allure confortable, écoute tes sensations\n• Km 16-21 : Donne ce que tu peux, prends du plaisir !\n\nAPRÈS LA COURSE :\n• Récupération : 15min marche + étirements\n• Hydratation et nutrition de récupération" },
+            { title: "Conseil", content: "🎉 C'EST LE JOUR J DU SEMI ! 🎉 Fais-toi plaisir et cours selon tes sensations ! C'est une étape vers ton objectif marathon ! 💪" },
+            { title: "Pourquoi cette séance ?", content: "JOUR J du semi-marathon d'Auray-Vannes ! Test grandeur nature et étape cruciale vers l'objectif marathon du 26 octobre." }
+        ]
+    },
+    // LUNDI 15 SEPTEMBRE - JOUR 47 (RÉCUPÉRATION POST-SEMI)
+    {
+        date: "2025-09-15",
+        title: "Récupération Active Post-Semi",
+        semi: false,
+        mar: true,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Récupération douce après le semi d'hier" },
+            { title: "Résumé", content: "30min récupération très facile + étirements" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nRécupération : 30min allure 8'00-8'30/km ultra-décontracté (marche-course si besoin)\nPas de HIIT : Juste étirements 20min et récupération\nHydratation maximale" },
+            { title: "Conseil", content: "Récupération douce après le semi. Écoute tes sensations, les jambes peuvent être lourdes, c'est normal ! Si c'est trop dur, remplace par de la marche." },
+            { title: "Pourquoi cette séance ?", content: "Favoriser la récupération post-course, réactiver la circulation sans stress." }
+        ]
+    },
+    // MARDI 16 SEPTEMBRE - JOUR 48
+    {
+        date: "2025-09-16",
+        title: "Endurance Fondamentale",
+        semi: false,
+        mar: true,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Reprise progressive après récupération post-semi" },
+            { title: "Résumé", content: "10km allure conversationnelle" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nÉchauffement : 10min progression douce\nCorps : 10km allure 6'30-6'45/km (tu dois pouvoir parler facilement)\nRetour au calme : 5min marche + étirements 10min" },
+            { title: "Conseil", content: "Reprise progressive. Si les jambes sont encore lourdes du semi, raccourci à 8km. On démarre la phase marathon en douceur." },
+            { title: "Pourquoi cette séance ?", content: "Reprise progressive vers l'entraînement marathon, évaluation des sensations post-semi." }
+        ]
+    },
+    // MERCREDI 17 SEPTEMBRE - JOUR 49
+    {
+        date: "2025-09-17",
+        title: "Récupération + HIIT Complet",
+        semi: false,
+        mar: false,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Récupération active après la reprise d'hier + renforcement" },
+            { title: "Résumé", content: "30min footing récup + 15min HIIT" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nFooting récup : 30min allure 7'30-8'00/km très décontracté\nHIIT Complet (15min) :\n4 tours de :\n• Pompes (30s)\n• Squats (30s)\n• Planche (30s)\n• Fentes alternées (30s)\n• Repos (1min)" },
+            { title: "Conseil", content: "On reprend les HIIT ! Récupération vraiment facile après la reprise d'hier. On commence à construire vers le marathon." },
+            { title: "Pourquoi cette séance ?", content: "Reprise du renforcement + récupération active pour la transition vers la préparation marathon intensive." }
+        ]
+    },
+    // JEUDI 18 SEPTEMBRE - JOUR 50
+    {
+        date: "2025-09-18",
+        title: "Tempo Run Marathon",
+        semi: false,
+        mar: true,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Développer l'allure seuil pour la préparation marathon" },
+            { title: "Résumé", content: "10km avec 6km à allure marathon +15s/km" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nÉchauffement : 15min footing facile progressif\nCorps : 2km facile + 6km allure 5'55-6'10/km (allure marathon +15s) + 2km facile\nRetour au calme : 5min marche + étirements 10min" },
+            { title: "Conseil", content: "Les 6km au milieu sont légèrement plus rapides que ton allure marathon objectif (5'40/km pour sub-4h). Tu dois pouvoir dire quelques mots." },
+            { title: "Pourquoi cette séance ?", content: "Développer l'endurance à allure soutenue pour le marathon, habituer le corps aux allures proches de l'objectif sub-4h." }
+        ]
+    },
+    // VENDREDI 19 SEPTEMBRE - JOUR 51
+    {
+        date: "2025-09-19",
+        title: "Récupération + HIIT Complet",
+        semi: false,
+        mar: false,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Récupération active après le tempo d'hier + renforcement" },
+            { title: "Résumé", content: "30min footing récup + 15min HIIT" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nFooting récup : 30min allure 7'30-8'00/km très décontracté\nHIIT Complet (15min) :\n4 tours de :\n• Burpees (30s)\n• Wall sit (30s)\n• Planche (30s)\n• Fentes sautées (30s)\n• Repos (1min)" },
+            { title: "Conseil", content: "Récupération facile après le tempo d'hier. Le HIIT est un peu plus intense avec burpees et fentes sautées." },
+            { title: "Pourquoi cette séance ?", content: "Récupération active + renforcement complet après l'effort soutenu d'hier + activation métabolique." }
+        ]
+    },
+    // SAMEDI 20 SEPTEMBRE - JOUR 52
+    {
+        date: "2025-09-20",
+        title: "Sortie Longue Marathon",
+        semi: false,
+        mar: true,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Première grosse sortie longue en préparation marathon intensive" },
+            { title: "Résumé", content: "16km avec progression finale" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix (1h avant la sortie)\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nÉchauffement : 10min progression douce\nCorps : 12km allure 6'15-6'30/km + 4km progression (6'00 → 5'45 → 5'30 → 5'15/km)\nRetour au calme : 5min marche + étirements 15min" },
+            { title: "Conseil", content: "Les 12 premiers km restent confortables. La progression sur les 4 derniers km simule un finish de course. Hydratation régulière." },
+            { title: "Pourquoi cette séance ?", content: "Développer l'endurance de base pour le marathon, habituer le corps à accélérer en fin d'effort long." }
+        ]
+    },
+    // DIMANCHE 21 SEPTEMBRE - JOUR 53
+    {
+        date: "2025-09-21",
+        title: "HIIT Complet Intense",
+        semi: false,
+        mar: false,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Renforcement complet + activation métabolique maximale" },
+            { title: "Résumé", content: "15min HIIT corps entier intensif" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nHIIT Complet (15min) :\n5 tours de :\n• Burpees (30s)\n• Mountain climbers (30s)\n• Squats sautés (30s)\n• Pompes (30s)\n• Planche (30s)\n• Repos (1min)" },
+            { title: "Conseil", content: "HIIT intense du dimanche ! Donne tout sur chaque exercice. On reprend l'intensité maximale pour la phase marathon." },
+            { title: "Pourquoi cette séance ?", content: "Activation métabolique maximale, renforcement complet corps entier, développement de la puissance pour le marathon." }
+        ]
+    },
+    // LUNDI 22 SEPTEMBRE - JOUR 54 (SEMAINE 7 - PHASE INTENSIVE MARATHON)
+    {
+        date: "2025-09-22",
+        title: "Endurance Fondamentale",
+        semi: false,
+        mar: true,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Développer la base aérobie - Montée en charge intensive" },
+            { title: "Résumé", content: "16km allure conversationnelle" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nÉchauffement : 10min progression douce\nCorps : 16km allure 6'30-6'45/km (tu dois pouvoir tenir une conversation)\nRetour au calme : 5min marche + étirements 10min" },
+            { title: "Conseil", content: "PHASE INTENSIVE MARATHON ! On monte sérieusement en volume. 16km cette semaine. Reste dans ta zone de confort aérobie." },
+            { title: "Pourquoi cette séance ?", content: "Montée intensive en volume, développement de la capacité aérobie maximale, préparation physique et mentale pour le marathon." }
+        ]
+    },
+    // MARDI 23 SEPTEMBRE - JOUR 55
+    {
+        date: "2025-09-23",
+        title: "VMA Marathon",
+        semi: false,
+        mar: true,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Développer la vitesse marathon et l'efficacité" },
+            { title: "Résumé", content: "5 x 800m à allure 10km" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nÉchauffement : 15min footing facile + 4 x 100m progressifs\nCorps : 5 x 800m allure 5'10-5'20/km (récupération 2min footing lent entre chaque)\nRetour au calme : 10min footing facile + étirements 10min" },
+            { title: "Conseil", content: "800m en phase intensive ! Vise la régularité. Ces 800m développent ta capacité à tenir des allures soutenues pour faciliter ton allure marathon." },
+            { title: "Pourquoi cette séance ?", content: "Développer la VMA spécifique marathon, améliorer l'efficacité à allure rapide pour que ton objectif 3h45-4h paraisse plus facile." }
+        ]
+    },
+    // MERCREDI 24 SEPTEMBRE - JOUR 56
+    {
+        date: "2025-09-24",
+        title: "Récupération + HIIT Complet",
+        semi: false,
+        mar: false,
+        done: false,
+        sections: [
+            { title: "Objectif", content: "Récupération active après la VMA + renforcement intensif" },
+            { title: "Résumé", content: "30min footing récup + 15min HIIT" },
+            { title: "Nutrition", content: "MATIN : 1 des 3 petits déjeuners au choix\nMIDI : 1 protéine + 1 glucide + légumes (300g) + 1 lipide\nSOIR : 1 protéine + légumes (300g) + 1 lipide + petit glucide (optionnel)" },
+            { title: "Détail", content: "SÉANCE D'ENTRAÎNEMENT :\nFooting récup : 30min allure 7'30-8'00/km très décontracté\nHIIT Complet (15min) :\n4 tours de :\n• Pompes (30s)\n• Squats (30s)\n• Planche (30s)\n• Fentes alternées (30s)\n• Repos (1min)" },
+            { title: "Conseil", content: "Récupération vraiment facile après la VMA intensive d'hier. Phase intensive oblige, on maintient un HIIT complet pour le renforcement." },
+            { title: "Pourquoi cette séance ?", content: "Récupération active + renforcement complet après l'effort VMA + activation métabolique en phase intensive." }
+        ]
     }
 ];
