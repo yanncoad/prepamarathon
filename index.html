@@ -2369,6 +2369,7 @@
     let currentHiitSession = null;
     let isTimerRunning = false;
     let isPaused = false;
+    let wakeLock = null;
 
     // Fallback data
     const fallbackDayPlans = {
@@ -2804,6 +2805,36 @@
           case 'heavy':
             navigator.vibrate(50);
             break;
+        }
+      }
+    }
+
+    // Wake Lock functions pour empêcher l'écran de se mettre en veille
+    async function requestWakeLock() {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await navigator.wakeLock.request('screen');
+          console.log('Wake Lock activé - l\'écran ne se mettra pas en veille');
+          
+          wakeLock.addEventListener('release', () => {
+            console.log('Wake Lock relâché');
+          });
+        } else {
+          console.log('Wake Lock API non supportée sur ce navigateur');
+        }
+      } catch (err) {
+        console.error('Erreur lors de l\'activation du Wake Lock:', err);
+      }
+    }
+
+    async function releaseWakeLock() {
+      if (wakeLock) {
+        try {
+          await wakeLock.release();
+          wakeLock = null;
+          console.log('Wake Lock désactivé - l\'écran peut se mettre en veille');
+        } catch (err) {
+          console.error('Erreur lors de la désactivation du Wake Lock:', err);
         }
       }
     }
@@ -3576,16 +3607,26 @@
       const detail = plan.detailSeance;
       console.log('Détail de la séance:', detail);
       
-      // Extraire les exercices et durées du détail de la séance
-      const hiitMatch = detail.match(/HIIT[^:]*:\s*\n([\s\S]*?)(?=\n\n|\n[A-Z]|$)/);
+      // Extraire les exercices et durées du détail de la séance - regex améliorée
+      const hiitMatch = detail.match(/HIIT[^:]*\s*\((\d+)min\)[^:]*:\s*\n([\s\S]*?)(?=\n\n|\n[A-Z]|$)/);
       if (!hiitMatch) {
-        console.log('Pas de section HIIT trouvée');
-        return getDefaultHiitConfig();
+        console.log('Pas de section HIIT trouvée, essai avec format alternatif');
+        // Essayer un format alternatif
+        const altMatch = detail.match(/HIIT[^:]*:\s*\n([\s\S]*?)(?=\n\n|\n[A-Z]|$)/);
+        if (!altMatch) {
+          return getDefaultHiitConfig();
+        }
+        return parseHiitSection(altMatch[1], null);
       }
 
-      const hiitSection = hiitMatch[1];
-      console.log('Section HIIT:', hiitSection);
+      const totalDuration = parseInt(hiitMatch[1]); // Durée totale en minutes
+      const hiitSection = hiitMatch[2];
+      console.log('Section HIIT:', hiitSection, 'Durée totale:', totalDuration, 'min');
       
+      return parseHiitSection(hiitSection, totalDuration);
+    }
+
+    function parseHiitSection(hiitSection, totalDuration) {
       // Extraire le nombre de tours
       const toursMatch = hiitSection.match(/(\d+)\s*tours?\s*de\s*:/);
       const rounds = toursMatch ? parseInt(toursMatch[1]) : 4;
@@ -3600,36 +3641,61 @@
       const exercises = exerciseLines.map(line => {
         const match = line.match(/•\s*(.+?)\s*\((\d+)s\)/);
         if (match) {
-          return { name: match[1], duration: parseInt(match[2]) };
+          return { name: match[1].trim(), duration: parseInt(match[2]) };
+        }
+        // Format alternatif sans durée spécifiée
+        const nameOnly = line.match(/•\s*(.+?)(?:\s*$)/);
+        if (nameOnly) {
+          return { name: nameOnly[1].trim(), duration: 30 }; // 30s par défaut
         }
         return { name: line.replace('•', '').trim(), duration: 30 };
       });
       console.log('Exercices extraits:', exercises);
 
-      // Extraire le temps de repos - format différent selon les séances
+      // Extraire le temps de repos - formats multiples supportés
       let restDuration = 60; // 1 minute par défaut
-      const reposMatch = hiitSection.match(/•?\s*Repos\s*\((\d+)(?:min(\d+)?s?|s)\)/);
       
+      // Format 1: • Repos (1min)
+      let reposMatch = hiitSection.match(/•?\s*Repos\s*\((\d+)min(?:(\d+)s?)?\)/);
       if (reposMatch) {
-        const firstNumber = parseInt(reposMatch[1]);
-        const secondNumber = reposMatch[2] ? parseInt(reposMatch[2]) : 0;
-        
-        // Si le premier nombre est suivi de "min", c'est des minutes
-        if (reposMatch[0].includes(reposMatch[1] + 'min')) {
-          restDuration = firstNumber * 60 + secondNumber;
+        const minutes = parseInt(reposMatch[1]);
+        const seconds = reposMatch[2] ? parseInt(reposMatch[2]) : 0;
+        restDuration = minutes * 60 + seconds;
+      } else {
+        // Format 2: • Repos (60s) ou Repos (1min30)
+        reposMatch = hiitSection.match(/•?\s*Repos\s*\((\d+)(?:min(\d+)?s?|s)\)/);
+        if (reposMatch) {
+          const firstNumber = parseInt(reposMatch[1]);
+          const secondNumber = reposMatch[2] ? parseInt(reposMatch[2]) : 0;
+          
+          if (reposMatch[0].includes(reposMatch[1] + 'min')) {
+            restDuration = firstNumber * 60 + secondNumber;
+          } else {
+            restDuration = firstNumber;
+          }
         } else {
-          // Sinon, c'est des secondes
-          restDuration = firstNumber;
+          // Format 3: • Repos (2min15)
+          reposMatch = hiitSection.match(/•?\s*Repos\s*\((\d+)min(\d+)\)/);
+          if (reposMatch) {
+            restDuration = parseInt(reposMatch[1]) * 60 + parseInt(reposMatch[2]);
+          }
         }
       }
       console.log('Durée de repos:', restDuration, 'secondes');
 
+      // Calculer la durée totale théorique
+      const totalExerciseTime = exercises.reduce((sum, ex) => sum + ex.duration, 0);
+      const calculatedTotal = (totalExerciseTime * rounds) + (restDuration * (rounds - 1));
+      
+      console.log('Durée calculée:', Math.ceil(calculatedTotal / 60), 'min vs durée annoncée:', totalDuration, 'min');
+
       const config = {
-        warmup: 0, // Pas d'échauffement
+        warmup: 0,
         rounds: rounds,
         exercises: exercises,
         rest: restDuration,
-        cooldown: 0 // Pas de retour au calme
+        cooldown: 0,
+        totalDuration: totalDuration || Math.ceil(calculatedTotal / 60) // en minutes
       };
       console.log('Configuration HIIT finale:', config);
       
@@ -3719,12 +3785,38 @@
       if (currentExerciseNum) currentExerciseNum.textContent = (timerState.currentExercise + 1).toString();
       if (totalExercises) totalExercises.textContent = currentHiitSession ? currentHiitSession.exercises.length.toString() : '4';
       
-      // Update progress bar
+      // Update progress bar - calcul amélioré basé sur la progression réelle
       let progress = 0;
-      if (timerState.totalTime > 0) {
-        progress = ((timerState.totalTime - timerState.timeLeft) / timerState.totalTime) * 100;
+      if (timerState.phase === 'ready') {
+        progress = 0;
+      } else if (timerState.phase === 'finished') {
+        progress = 100;
+      } else if (currentHiitSession && timerState.totalTime > 0) {
+        // Calculer le temps écoulé basé sur la progression actuelle
+        const completedRounds = timerState.currentRound - 1;
+        const completedExercisesInCurrentRound = timerState.phase === 'rest' ? currentHiitSession.exercises.length : timerState.currentExercise;
+        
+        // Temps des tours complets
+        const totalExerciseTimePerRound = currentHiitSession.exercises.reduce((sum, ex) => sum + ex.duration, 0);
+        let timeElapsed = completedRounds * (totalExerciseTimePerRound + currentHiitSession.rest);
+        
+        // Temps des exercices complétés dans le tour actuel
+        for (let i = 0; i < completedExercisesInCurrentRound; i++) {
+          timeElapsed += currentHiitSession.exercises[i].duration;
+        }
+        
+        // Temps de l'exercice/repos actuel
+        if (timerState.phase === 'work') {
+          const currentExerciseTotalTime = currentHiitSession.exercises[timerState.currentExercise].duration;
+          timeElapsed += currentExerciseTotalTime - timerState.timeLeft;
+        } else if (timerState.phase === 'rest') {
+          timeElapsed += currentHiitSession.rest - timerState.timeLeft;
+        }
+        
+        progress = Math.min(100, (timeElapsed / timerState.totalTime) * 100);
       }
-      progressFill.style.width = `${progress}%`;
+      
+      progressFill.style.width = `${Math.max(0, progress)}%`;
     }
 
     function resetTimerButtons() {
@@ -3748,6 +3840,9 @@
         const totalExerciseTimeAllRounds = totalExerciseTime * currentHiitSession.rounds;
         const totalRestTime = currentHiitSession.rest * (currentHiitSession.rounds - 1); // Repos entre tours seulement
         timerState.totalTime = totalExerciseTimeAllRounds + totalRestTime;
+        
+        // Activer le Wake Lock pour empêcher l'écran de se mettre en veille
+        requestWakeLock();
       }
       
       isTimerRunning = true;
@@ -3782,6 +3877,10 @@
 
     function stopTimer() {
       clearInterval(timerInterval);
+      
+      // Désactiver le Wake Lock quand on arrête le timer
+      releaseWakeLock();
+      
       timerState = {
         phase: 'ready',
         currentRound: 0,
@@ -3826,6 +3925,9 @@
               console.log('Séance terminée!');
               clearInterval(timerInterval);
               resetTimerButtons();
+              
+              // Désactiver le Wake Lock quand la séance est terminée
+              releaseWakeLock();
             }
           }
           break;
@@ -3852,8 +3954,9 @@
       const today = new Date();
       const daysRemaining = Math.max(0, Math.ceil((endDate - today) / (1000 * 60 * 60 * 24)));
       
-      // Calcul du pourcentage basé sur l'avancement temporel depuis le 23 juillet
-      const trainingStart = new Date("2025-07-23"); // 23 juillet 2025
+      // Calcul du pourcentage basé sur la première séance disponible
+      const allDates = Object.keys(window.dayPlans || {}).sort();
+      const trainingStart = allDates.length > 0 ? new Date(allDates[0]) : new Date("2025-07-31");
       const totalTrainingDays = Math.ceil((endDate - trainingStart) / (1000 * 60 * 60 * 24));
       const daysPassed = Math.max(0, Math.ceil((today - trainingStart) / (1000 * 60 * 60 * 24)));
       const progressPercentage = totalTrainingDays > 0 ? Math.min(100, Math.round((daysPassed / totalTrainingDays) * 100)) : 0;
@@ -4054,11 +4157,19 @@
       
       document.getElementById('closeTimerModal').addEventListener('click', () => {
         document.getElementById('timerModal').classList.add('hidden');
+        // Arrêter le timer et désactiver le Wake Lock si on ferme le modal
+        if (isTimerRunning || isPaused) {
+          stopTimer();
+        }
       });
       
       document.getElementById('timerModal').addEventListener('click', (e) => {
         if (e.target.id === 'timerModal') {
           document.getElementById('timerModal').classList.add('hidden');
+          // Arrêter le timer et désactiver le Wake Lock si on ferme le modal
+          if (isTimerRunning || isPaused) {
+            stopTimer();
+          }
         }
       });
       
@@ -4099,6 +4210,14 @@
       
       updateMobileInterface();
       window.addEventListener('resize', updateMobileInterface);
+
+      // Gérer la réactivation du Wake Lock si l'utilisateur revient sur la page
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && isTimerRunning && !wakeLock) {
+          // L'utilisateur revient sur la page et le timer tourne mais le Wake Lock est perdu
+          requestWakeLock();
+        }
+      });
 
       // Timer event listeners
       document.getElementById('timerStart').addEventListener('click', startTimer);
